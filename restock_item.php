@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Pastikan jumlah restok tidak negatif
         if ($restock_quantity > 0) {
             // Lakukan query untuk memperbarui jumlah satuan
-            $sql = "UPDATE item SET jumlah_satuan = jumlah_satuan + $restock_quantity WHERE id_item = $id_item";
+            $sql = "UPDATE item SET jumlah_satuan = jumlah_satuan + $restock_quantity, total_dibeli = total_dibeli + $restock_quantity WHERE id_item = $id_item";
 
             if ($koneksi->query($sql) === TRUE) {
                 echo "Restok berhasil dilakukan.";

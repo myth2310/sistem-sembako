@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2024 at 07:33 AM
+-- Generation Time: Mar 12, 2024 at 02:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,7 +41,17 @@ CREATE TABLE `detail_transaksi` (
 
 INSERT INTO `detail_transaksi` (`id_detail_transaksi`, `id_transaksi`, `id_item`, `jumlah_satuan`, `total_per_satuan`) VALUES
 (7, 13, 2, 1, 15000),
-(8, 13, 4, 8, 320000);
+(8, 13, 4, 8, 320000),
+(9, 14, 1, 3, 36000),
+(10, 15, 2, 2, 30000),
+(11, 15, 4, 5, 200000),
+(12, 16, 1, 3, 36000),
+(13, 16, 2, 3, 45000),
+(14, 17, 2, 5, 75000),
+(15, 17, 1, 3, 36000),
+(16, 18, 2, 1, 15000),
+(17, 18, 4, 1, 40000),
+(18, 19, 5, 10, 15000);
 
 -- --------------------------------------------------------
 
@@ -58,17 +68,19 @@ CREATE TABLE `item` (
   `jumlah_satuan` int(11) DEFAULT NULL,
   `isi_satuan` varchar(50) DEFAULT NULL,
   `harga_beli` decimal(10,2) DEFAULT NULL,
-  `harga_jual` decimal(10,2) DEFAULT NULL
+  `harga_jual` decimal(10,2) DEFAULT NULL,
+  `total_dibeli` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `item`
 --
 
-INSERT INTO `item` (`id_item`, `kategori_id`, `nama_item`, `merk`, `jenis_satuan`, `jumlah_satuan`, `isi_satuan`, `harga_beli`, `harga_jual`) VALUES
-(1, 2, 'Potato', 'Taroo', 'Dus', 1, '10', 12000.00, 15000.00),
-(2, 1, 'Bubur ', 'Nesle', 'Dus', 0, '10', 15000.00, 17000.00),
-(4, 1, 'Podeng', 'adoaopda', 'Dus', 15, '33', 40000.00, 5000.00);
+INSERT INTO `item` (`id_item`, `kategori_id`, `nama_item`, `merk`, `jenis_satuan`, `jumlah_satuan`, `isi_satuan`, `harga_beli`, `harga_jual`, `total_dibeli`) VALUES
+(1, 2, 'Potato', 'Taroo', 'Dus', 7, '10', 12000.00, 15000.00, 0),
+(2, 1, 'Bubur ', 'Nesle', 'Dus', 14, '10', 15000.00, 17000.00, 0),
+(4, 1, 'Podeng', 'adoaopda', 'Dus', 9, '33', 40000.00, 5000.00, 0),
+(5, 1, 'Roti o', NULL, 'Dus', 5, '20', 1500.00, 2000.00, 15);
 
 -- --------------------------------------------------------
 
@@ -116,6 +128,20 @@ INSERT INTO `member` (`id`, `nama`, `diskon`, `alamat`, `nomor`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `opname`
+--
+
+CREATE TABLE `opname` (
+  `id_opname` int(11) NOT NULL,
+  `id_item` int(11) NOT NULL,
+  `stok_opname` int(11) NOT NULL,
+  `deskripsi` varchar(255) NOT NULL,
+  `keterangan` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `transaksi`
 --
 
@@ -136,7 +162,13 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id_transaksi`, `no_transaksi`, `tanggal`, `nama_pelanggan`, `total_harga`, `diskon`, `uang_terima`, `kembalian`, `keterangan`) VALUES
-(13, 'TR21051662', '2024-03-12', 'Budiman', 318250, 5, 320000, 1750.00, 'lunas');
+(13, 'TR21051662', '2024-03-12', 'Budiman', 318250, 5, 320000, 1750.00, 'lunas'),
+(14, 'TR14449004', '2024-03-12', 'Budiman', 34200, 5, 40000, 5800.00, 'teatatatat'),
+(15, 'TR14913831', '2024-03-12', 'Budiman', 218500, 5, 220000, 1500.00, 'sfgawegsfgfvwe'),
+(16, 'TR17903487', '2024-03-12', 'Budiman', 76950, 5, 80000, 3050.00, 'cbvcvbcvb'),
+(17, 'TR19397268', '2024-03-12', 'adi', 111000, 0, 200000, 89000.00, 'Terima kasih, sampai datang kembali'),
+(18, 'TR42782226', '2024-03-12', 'Budiman', 52, 5, 55000, 2750.00, 'cvbfsfsd'),
+(19, 'TR13301312', '2024-03-12', 'aab', 15, 0, 20000, 5000.00, 'fghfthfgh');
 
 --
 -- Indexes for dumped tables
@@ -168,6 +200,13 @@ ALTER TABLE `member`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `opname`
+--
+ALTER TABLE `opname`
+  ADD PRIMARY KEY (`id_opname`),
+  ADD KEY `id_item` (`id_item`);
+
+--
 -- Indexes for table `transaksi`
 --
 ALTER TABLE `transaksi`
@@ -181,13 +220,13 @@ ALTER TABLE `transaksi`
 -- AUTO_INCREMENT for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_detail_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -202,10 +241,16 @@ ALTER TABLE `member`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `opname`
+--
+ALTER TABLE `opname`
+  MODIFY `id_opname` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Constraints for dumped tables
@@ -216,6 +261,12 @@ ALTER TABLE `transaksi`
 --
 ALTER TABLE `item`
   ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`kategori_id`) REFERENCES `kategori` (`id`);
+
+--
+-- Constraints for table `opname`
+--
+ALTER TABLE `opname`
+  ADD CONSTRAINT `opname_ibfk_1` FOREIGN KEY (`id_item`) REFERENCES `item` (`id_item`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

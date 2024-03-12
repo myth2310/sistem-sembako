@@ -6,14 +6,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_item = $_POST['id_item'];
     $kategori_id = $_POST['kategori_id']; // Mengambil nilai kategori_id dari select option
     $nama_item = $_POST['nama_item'];
-    $merk = $_POST['merk'];
     $jenis_satuan = $_POST['jenis_satuan'];
     $jumlah_satuan = $_POST['jumlah_satuan'];
     $isi_satuan = $_POST['isi_satuan'];
     $harga_beli = $_POST['harga_beli'];
     $harga_jual = $_POST['harga_jual'];
 
-    $query = "INSERT INTO item (id_item, kategori_id, nama_item, merk, jenis_satuan, jumlah_satuan, isi_satuan, harga_beli, harga_jual) VALUES ('$id_item', '$kategori_id', '$nama_item', '$merk', '$jenis_satuan', '$jumlah_satuan', '$isi_satuan', '$harga_beli', '$harga_jual')";
+    $query = "INSERT INTO item (id_item, kategori_id, nama_item, jenis_satuan, jumlah_satuan, isi_satuan, harga_beli, harga_jual, total_dibeli) 
+          VALUES ('$id_item', '$kategori_id', '$nama_item', '$jenis_satuan', '$jumlah_satuan', '$isi_satuan', '$harga_beli', '$harga_jual', '$jumlah_satuan')";
     if ($koneksi->query($query) === TRUE) {
         header("Location: item.php");
         exit();
@@ -73,10 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <div class="form-group">
                                                 <label for="nama_item">Nama Item:</label>
                                                 <input type="text" class="form-control" id="nama_item" name="nama_item" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="merk">Merk:</label>
-                                                <input type="text" class="form-control" id="merk" name="merk" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="jenis_satuan">Jenis</label>

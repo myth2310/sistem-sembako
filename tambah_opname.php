@@ -18,27 +18,18 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12">
 
-                                <!-- Form Tambah Kategori -->
-                                <div class="card mt-4">
-                                    <div class="card-header">
-                                        <h4>Tambah Kategori</h4>
+                                <!-- Form Cek Stock Opname -->
+                                <form method="post" action="opname.php">
+                                    <div class="form-group">
+                                        <label for="nama">Nama Item:</label>
+                                        <input type="text" class="form-control" id="nama" name="nama" required>
                                     </div>
-                                    <div class="card-body">
-                                        <form method="post" action="">
-                                            <div class="form-group">
-                                                <label for="kategori">Nama:</label>
-                                                <input type="text" class="form-control" id="nama" name="nama" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="stok_opname">Stok Opname:</label>
-                                                <input type="date" class="form-control" id="stok_opname" name="stok_opname" required>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
-                                            <a href="kategori.php" class="btn btn-secondary">Batal</a>
-                                        </form>
+                                    <div class="form-group">
+                                        <label for="stok_opname">Stok Opname:</label>
+                                        <input type="number" class="form-control" id="stok_opname" name="stok_opname" required>
                                     </div>
-                                </div>
-                                <!-- End Form Tambah Kategori -->
+                                    <button type="submit" class="btn btn-primary">Cek Stok Opname</button>
+                                </form>
 
                             </div>
                         </div>
