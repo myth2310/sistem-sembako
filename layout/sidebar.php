@@ -11,7 +11,7 @@
     <li class="menu-header">Pembayaran</li>
     <li><a class="nav-link" href="pembayaran.php"><i class="fas fa-wallet"></i><span>Pembayaran</span></a></li>
     <li><a class="nav-link" href="riwayat.php"><i class="fas fa-wallet"></i><span>Riwayat Pembayaran</span></a></li>
-    <li class="menu-header">Items</li>
+    <li class="menu-header">Master Items</li>
     <li><a class="nav-link" href="kategori.php"><i class="fas fa-wallet"></i><span>Kategori</span></a></li>
     <li><a class="nav-link" href="item.php"><i class="fas fa-wallet"></i><span>Item</span></a></li>
     <li class="menu-header">Master Opname</li>
