@@ -14,6 +14,9 @@
     <li class="menu-header">Items</li>
     <li><a class="nav-link" href="kategori.php"><i class="fas fa-wallet"></i><span>Kategori</span></a></li>
     <li><a class="nav-link" href="item.php"><i class="fas fa-wallet"></i><span>Item</span></a></li>
+    <li class="menu-header">Master Opname</li>
+    <li><a class="nav-link" href="inventory.php"><i class="fas fa-wallet"></i><span>Inventory</span></a></li>
+    <li><a class="nav-link" href="opname.php"><i class="fas fa-wallet"></i><span>Stock Opname</span></a></li>
     <li class="menu-header">Member Area</li>
     <li><a class="nav-link" href="member.php"><i class="fas fa-wallet"></i><span>Member</span></a></li>
     <!-- <li class="menu-header">Laporan</li>
