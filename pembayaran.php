@@ -201,7 +201,8 @@
         var diskon = parseFloat($("#diskon").val()) || 0;
         var diskonAmount = (diskon / 100) * totalHargaBeli;
         var totalAfterDiskon = totalHargaBeli - diskonAmount;
-        $("#totalHargaInput").val(totalAfterDiskon.toFixed(2));
+
+        $("#totalHargaInput").val(number_format(totalAfterDiskon));
         var uangDiterima = parseFloat($("#uang_diterima").val()) || 0;
 
         // Check if uangDiterima is not NaN and not 0
@@ -217,6 +218,13 @@
         }
 
       }
+
+      // Add a helper function to format numbers with commas
+function number_format(number, decimals) {
+  var parts = number.toFixed(decimals).toString().split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return parts.join(".");
+}
 
 
       $("#uang_diterima").on("input", function() {

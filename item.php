@@ -32,7 +32,6 @@
                                                         <th>No</th>
                                                         <th>Kategori</th>
                                                         <th>Nama Item</th>
-                                                        <th>Merk</th>
                                                         <th>Jenis</th>
                                                         <th>Jumlah</th>
                                                         <th>Isi Satuan</th>
@@ -56,7 +55,6 @@
                                                             echo "<td>" . $no++ . "</td>";
                                                             echo "<td>" . $row['kategori'] . "</td>"; // Menggunakan kolom 'kategori' dari tabel kategori
                                                             echo "<td>" . $row['nama_item'] . "</td>";
-                                                            echo "<td>" . $row['merk'] . "</td>";
                                                             echo "<td>" . $row['jenis_satuan'] . "</td>";
                                                             echo "<td>" . $row['jumlah_satuan'] . "</td>";
                                                             echo "<td>" . $row['isi_satuan'] . "</td>";
@@ -66,7 +64,16 @@
                                                             echo "<a href='edit_item.php?id_item=" . $row['id_item'] . "' class='btn btn-warning btn-sm'>Perbarui Data</a>";
                                                             echo "<a href='hapus_item.php?id_item=" . $row['id_item'] . "' class='btn btn-danger btn-sm'>Hapus</a>";
                                                             echo "<a href='print_item.php?id_item=" . $row['id_item'] . "' class='btn btn-success btn-sm'>Print</a>";
+                                                            echo "<button onclick='showRestockField(" . $row['id_item'] . ")' class='btn btn-primary btn-sm'>Restok</button>"; // Tombol Restok
+
+                                                            // Field restok dimasukkan ke dalam tabel di bawah tombol Restok
+                                                            echo "<div id='restockField_" . $row['id_item'] . "' style='display: none;'>";
+                                                            echo "<input type='number' id='restockQuantity_" . $row['id_item'] . "' placeholder='Jumlah Restok'>";
+                                                            echo "<button onclick='submitRestock(" . $row['id_item'] . ")' class='btn btn-primary btn-sm'>Submit</button>"; // Tombol Submit Restok
+                                                            echo "</div>";
+
                                                             echo "</td>";
+
                                                             echo "</tr>";
                                                         }
                                                     } else {
@@ -99,6 +106,44 @@
                     // Cetak halaman
                     newWindow.print();
                     newWindow.close();
+                }
+
+                function showRestockField(itemId) {
+                    var restockField = document.getElementById('restockField_' + itemId);
+                    restockField.style.display = 'block';
+                }
+
+                function submitRestock(itemId) {
+                    var restockQuantity = document.getElementById('restockQuantity_' + itemId).value;
+
+                    // Validasi input (misalnya, pastikan bahwa restockQuantity adalah angka positif)
+                    if (isNaN(restockQuantity) || restockQuantity <= 0) {
+                        alert('Jumlah restok harus angka positif.');
+                        return;
+                    }
+
+                    // Kirim data restok ke server (Anda dapat menggunakan AJAX atau bentuk pengiriman data yang sesuai)
+                    // Misalnya, Anda dapat menggunakan fetch() atau jQuery.ajax() untuk mengirim data ke server.
+                    // Pastikan untuk mengatur endpoint yang sesuai di sisi server (contoh: restock_item.php).
+                    fetch('restock_item.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: 'id_item=' + itemId + '&restock_quantity=' + restockQuantity,
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            // Tampilkan pesan feedback dari server (misalnya, "Restok berhasil dilakukan.")
+                            alert(data);
+                            // Sembunyikan field restok setelah restok berhasil
+                            var restockField = document.getElementById('restockField_' + itemId);
+                            restockField.style.display = 'none';
+                        })
+                        .catch(error => {
+                            // Tangani kesalahan jika terjadi
+                            console.error('Error:', error);
+                        });
                 }
             </script>
 

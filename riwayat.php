@@ -139,9 +139,15 @@
                             },
                             {
                                 extend: 'csv',
+                                exportOptions: {
+                                    columns: [0, 1, 2] // Column index which needs to export
+                                }
                             },
                             {
                                 extend: 'excel',
+                                exportOptions: {
+                                    columns: [0, 1, 2] // Column index which needs to export
+                                }
                             }
                         ]
 

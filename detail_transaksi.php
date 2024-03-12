@@ -68,6 +68,7 @@ $koneksi->close();
                                                 <thead class="table-warning">
                                                     <tr>
                                                         <th scope="col">Nama Item</th>
+                                                        <th scope="col">Jenis Satuan</th>
                                                         <th scope="col">Jumlah Satuan</th>
                                                         <th scope="col">Harga Satuan</th>
                                                         <th scope="col">Total Per/satuan</th>
@@ -91,6 +92,7 @@ $koneksi->close();
                                                             while ($data = $result->fetch_assoc()) {
                                                                 echo "<tr>";
                                                                 echo "<td>" . $data['nama_item'] . "</td>";
+                                                                echo "<td>" . $data['jenis_satuan'] . "</td>";
                                                                 echo "<td>" . $data['jumlah'] . "</td>";
                                                                 echo "<td> Rp." . number_format($data['harga_beli'], 0, ',', '.'). "</td>";
                                                                 echo "<td> Rp." .  number_format($data['total_per_satuan'], 0, ',', '.'). "</td>";

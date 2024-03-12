@@ -66,6 +66,7 @@ if (isset($_GET['id_transaksi'])) {
                 $pdf->Ln(); // Add some space before details
                 $pdf->SetFont('Arial', 'B', 12);
                 $pdf->Cell(30, 10, 'Item', 1);
+                $pdf->Cell(30, 10, 'Jenis Satuan', 1);
                 $pdf->Cell(40, 10, 'Jumlah Satuan', 1);
                 $pdf->Cell(40, 10, 'Harga Beli', 1);
                 $pdf->Cell(40, 10, 'Subtotal', 1);
@@ -74,6 +75,7 @@ if (isset($_GET['id_transaksi'])) {
                 $pdf->SetFont('Arial', '', 12);
                 while ($detailRow = $detailResult->fetch_assoc()) {
                     $pdf->Cell(30, 10, $detailRow['nama_item'], 1);
+                    $pdf->Cell(30, 10, $detailRow['jenis_satuan'], 1);
                     $pdf->Cell(40, 10, $detailRow['jumlah'], 1);
                     $pdf->Cell(40, 10, $detailRow['harga_beli'], 1);
                     $pdf->Cell(40, 10, $detailRow['total_per_satuan'], 1);
