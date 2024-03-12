@@ -1,44 +1,12 @@
 <?php
-// Masukkan koneksi ke database di sini jika belum dimasukkan
 include('koneksi/config.php');
 
-// Inisialisasi variabel
-$nama_item = "";
-$stok_opname = "";
-$deskripsi = "";
-$keterangan = "";
+// Ambil data dari tabel opname
+$query_opname = "SELECT item.nama_item, opname.stok_opname, opname.deskripsi, opname.keterangan, opname.id_opname
+                 FROM opname
+                 INNER JOIN item ON opname.id_item = item.id_item";
+$result_opname = $koneksi->query($query_opname);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Mendapatkan data dari form
-    $nama_item = $_POST['nama'];
-    $stok_opname = $_POST['stok_opname'];
-
-    // Query untuk mendapatkan data jumlah_satuan berdasarkan nama item
-    $query = "SELECT jumlah_satuan FROM item WHERE nama_item = '$nama_item'";
-    $result = $koneksi->query($query);
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $jumlah_satuan = $row['jumlah_satuan'];
-
-        // Menentukan deskripsi
-        if ($stok_opname == $jumlah_satuan) {
-            $deskripsi = "Benar";
-        } elseif ($stok_opname < $jumlah_satuan) {
-            $kurang = $jumlah_satuan - $stok_opname;
-            $deskripsi = "Kurang $kurang";
-        } else {
-            $lebih = $stok_opname - $jumlah_satuan;
-            $deskripsi = "Lebih $lebih";
-        }
-
-        // Set keterangan sesuai kebutuhan Anda
-        $keterangan = $_POST['keterangan'];
-    } else {
-        // Item tidak ditemukan
-        $deskripsi = "Item tidak ditemukan";
-    }
-}
 ?>
 
 <?php include('layout/head.php'); ?>
@@ -82,24 +50,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php if ($_SERVER["REQUEST_METHOD"] == "POST") : ?>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td><?php echo $nama_item; ?></td>
-                                                            <td><?php echo $stok_opname; ?></td>
-                                                            <td><?php echo $deskripsi; ?></td>
-                                                            <td><?php echo $keterangan; ?></td>
-                                                            <td>
-                                                                <form method="post" action="print.php">
-                                                                    <input type="hidden" name="nama_item" value="<?php echo $nama_item; ?>">
-                                                                    <input type="hidden" name="stok_opname" value="<?php echo $stok_opname; ?>">
-                                                                    <input type="hidden" name="deskripsi" value="<?php echo $deskripsi; ?>">
-                                                                    <input type="hidden" name="keterangan" value="<?php echo $keterangan; ?>">
-                                                                    <button type="submit" class="btn btn-success">Print</button>
-                                                                </form>
-                                                            </td>
-                                                        </tr>
-                                                    <?php endif; ?>
+                                                    <?php
+                                                    if ($result_opname->num_rows > 0) {
+                                                        $no = 1;
+                                                        while ($row_opname = $result_opname->fetch_assoc()) {
+                                                            echo "<tr>";
+                                                            echo "<td>" . $no++ . "</td>";
+                                                            echo "<td>" . $row_opname['nama_item'] . "</td>";
+                                                            echo "<td>" . $row_opname['stok_opname'] . "</td>";
+                                                            echo "<td>" . $row_opname['deskripsi'] . "</td>";
+                                                            echo "<td><input type='text' name='keterangan_" . $row_opname['id_opname'] . "' value='" . $row_opname['keterangan'] . "'></td>";
+                                                            echo "<td><button class='btn btn-success update-btn' data-id='" . $row_opname['id_opname'] . "'>Update</button></td>";
+                                                            echo "</tr>";
+                                                        }
+                                                    } else {
+                                                        echo "<tr><td colspan='6'>Tidak ada data stok opname</td></tr>";
+                                                    }
+                                                    ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -112,12 +79,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </section>
                 </div>
                 <!-- End Bagian Utama -->
-
             </div>
 
             <?php include('layout/js.php'); ?>
         </div>
     </div>
+    <script>
+        // Tangkap klik tombol update
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('update-btn')) {
+                // Ambil ID opname dari atribut data-id
+                var idOpname = e.target.getAttribute('data-id');
+                // Ambil nilai keterangan dari input field di baris yang sama
+                var keterangan = document.querySelector('input[name="keterangan_' + idOpname + '"]').value;
+
+                // Kirim data yang diubah ke file PHP menggunakan AJAX
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'proses_update_opname.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        // Tambahkan kode untuk menangani respon dari server (jika diperlukan)
+                        console.log(xhr.responseText);
+                        // Jika pembaruan berhasil, Anda bisa tambahkan logika lain di sini
+                    }
+                };
+                xhr.send('id_opname=' + idOpname + '&keterangan=' + encodeURIComponent(keterangan)); // Perlu menggunakan encodeURIComponent untuk menghindari masalah karakter khusus
+            }
+        });
+    </script>
+
+
 </body>
 
 </html>
