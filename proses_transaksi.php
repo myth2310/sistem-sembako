@@ -5,22 +5,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tanggal = date('Y-m-d H:i:s');
     $no_transaksi = $_POST['no_transaksi'];
     $nama = $_POST['nama'];
-    $total_harga = $_POST['total_harga'];
-    $diskon = $_POST['diskon'];
-    $uang_diterima = $_POST['uang_diterima'];
-    $kembalian = $_POST['kembalian'];
+    $total_harga = intval(str_replace(["Rp. ", "."], "", $_POST['total_harga']));
+    $diskon = intval($_POST['diskon']);
+    
+    // Konversi nilai uang diterima dari format "Rp. " ke integer
+    $uang_diterima = intval(str_replace(["Rp. ", "."], "", $_POST['uang_diterima']));
+    
+    // Konversi nilai kembalian dari format "Rp. " ke float
+    $kembalian = floatval(str_replace(["Rp. ", "."], "", $_POST['kembalian']));
+    
     $keterangan = $_POST['keterangan'];
 
     $query = "INSERT INTO transaksi (no_transaksi, tanggal, nama_pelanggan, total_harga, diskon, uang_terima, kembalian, keterangan) 
           VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $koneksi->prepare($query);
-    $stmt->bind_param("ssssssss", $no_transaksi, $tanggal, $nama, $total_harga, $diskon, $uang_diterima, $kembalian, $keterangan);
+    $stmt->bind_param("sssiidds", $no_transaksi, $tanggal, $nama, $total_harga, $diskon, $uang_diterima, $kembalian, $keterangan);
 
     // Execute the main transaction insertion
     $stmt->execute();
-
-
 
     // Fetch the id_transaksi after insertion
     $id_transaksi = $koneksi->insert_id;
@@ -48,3 +51,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     header("Location: print_invoice_riwayat.php?id_transaksi=" . $id_transaksi);
 }
+?>

@@ -48,10 +48,10 @@
                       </div>
                       <div class="row">
                         <div class="col-md-4 offset-md-8">
-                          <div class="form-group">
-                            <label for="totalHargaInput" class="text-dark">Harus Dibayar (Rp.)<span class='red'> *</span></label>
-                            <input type="text" id="totalHargaInput" class="form-control" name="total_harga" value="0" readonly />
-                          </div>
+                            <div class="form-group">
+                                <label for="totalHargaInput" class="text-dark">Harus Dibayar (Rp.)<span class='red'> *</span></label>
+                                <input type="text" id="totalHargaInput" class="form-control" name="total_harga" value="Rp. 0" readonly />
+                            </div>
                         </div>
                         <div class="col-md-4 offset-md-8">
                           <div class="form-group">
@@ -71,14 +71,15 @@
                         <div class="col-md-4 offset-md-8">
                           <div class="form-group">
                             <label for="uang_diterima" class="text-dark">Bayar (Rp.)<span class='red'> *</span></label>
-                            <input class="form-control" type="number" name="uang_diterima" id="uang_diterima" required />
+                            <input class="form-control" type="text" name="uang_diterima" id="uang_diterima" required />
                           </div>
                         </div>
+
                         <div class="col-md-4 offset-md-8">
-                          <div class="form-group">
-                            <label for="kembalian" class="text-dark">Kembalian (Rp.)<span class='red'> *</span></label>
-                            <input class="form-control" type="number" name="kembalian" id="kembalian" readonly />
-                          </div>
+                            <div class="form-group">
+                                <label for="kembalian" class="text-dark">Kembalian (Rp.)<span class='red'> *</span></label>
+                                <input class="form-control" type="text" name="kembalian" id="kembalian" readonly />
+                            </div>
                         </div>
                         <!-- Keterangan -->
                         <div class="col-md-4 offset-md-8">
@@ -184,46 +185,54 @@
 
       // Function to recalculate total harga_beli
       function recalculateTotal() {
-        var totalHargaBeli = 0;
+          var totalHargaBeli = 0;
 
-        $(".item-container").each(function() {
-          var jumlahSatuan = parseFloat($(this).find(".jumlah_satuan").val()) || 0;
-          var hargaBeli = parseFloat($(this).find(".harga_beli").val()) || 0;
+          $(".item-container").each(function() {
+              var jumlahSatuan = parseFloat($(this).find(".jumlah_satuan").val()) || 0;
+              var hargaBeli = parseFloat($(this).find(".harga_beli").val()) || 0;
 
-          var totalPerSatuan = jumlahSatuan * hargaBeli;
-          totalHargaBeli += totalPerSatuan;
+              var totalPerSatuan = jumlahSatuan * hargaBeli;
+              totalHargaBeli += totalPerSatuan;
 
-          // Update the total per/satuan field
-          $(this).find(".total_per_satuan").val(totalPerSatuan.toFixed());
-        });
+              // Update the total per/satuan field
+              $(this).find(".total_per_satuan").val(totalPerSatuan.toFixed());
+          });
 
+          var diskon = parseFloat($("#diskon").val()) || 0;
+          var diskonAmount = (diskon / 100) * totalHargaBeli;
+          var totalAfterDiskon = totalHargaBeli - diskonAmount;
 
-        var diskon = parseFloat($("#diskon").val()) || 0;
-        var diskonAmount = (diskon / 100) * totalHargaBeli;
-        var totalAfterDiskon = totalHargaBeli - diskonAmount;
+          // Format total harga before setting its value
+          $("#totalHargaInput").val(formatRupiah(totalAfterDiskon));
 
-        $("#totalHargaInput").val(totalAfterDiskon);
-        var uangDiterima = parseFloat($("#uang_diterima").val()) || 0;
+          var uangDiterima = parseFloat($("#uang_diterima").val()) || 0;
 
-        // Check if uangDiterima is not NaN and not 0
-        if (!isNaN(uangDiterima) && uangDiterima !== 0) {
-          // Calculate kembalian
-          var kembalian = uangDiterima - totalAfterDiskon;
+          // Check if uangDiterima is not NaN and not 0
+          if (!isNaN(uangDiterima) && uangDiterima !== 0) {
+              // Calculate kembalian
+              var kembalian = uangDiterima - totalAfterDiskon;
 
-          // Update the kembalian input field
-          $("#kembalian").val(kembalian.toFixed());
-        } else {
-          // Set kembalian to empty if uangDiterima is not entered
-          $("#kembalian").val("");
-        }
-
+              // Format kembalian before setting its value
+              $("#kembalian").val(formatRupiah(kembalian));
+          } else {
+              // Set kembalian to empty if uangDiterima is not entered
+              $("#kembalian").val("");
+          }
       }
 
+      // Function to format number to Indonesian currency format
+      function formatRupiah(angka) {
+          var reverse = angka.toString().split('').reverse().join(''),
+              ribuan = reverse.match(/\d{1,3}/g);
+          ribuan = ribuan.join('.').split('').reverse().join('');
+          return 'Rp. ' + ribuan;
+      }
 
       $("#uang_diterima").on("input", function() {
-        // Recalculate total and kembalian when uang_diterima is entered
-        recalculateTotal();
+          // Recalculate total and kembalian when uang_diterima is entered
+          recalculateTotal();
       });
+
 
       // Event handler for clicking the "cekDiskonBtn"
       $("#cekDiskonBtn").click(function() {
