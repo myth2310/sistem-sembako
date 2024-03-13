@@ -25,10 +25,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error: " . $query_simpan . "<br>" . $koneksi->error;
     }
 } else {
-    echo "Nama item tidak ditemukan dalam database.";
+   
 }
 
 $koneksi->close();
+?>
+
+<?php include('layout/head.php'); ?>
+
+<?php
+session_start();
+
+// Periksa apakah pengguna sudah login
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Ambil username dari sesi
+$username = $_SESSION['username'];
 ?>
 
 <?php include('layout/head.php'); ?>

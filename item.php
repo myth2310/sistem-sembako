@@ -1,5 +1,20 @@
 <?php include('layout/head.php'); ?>
 
+<?php include('layout/head.php'); ?>
+
+<?php
+session_start();
+
+// Periksa apakah pengguna sudah login
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Ambil username dari sesi
+$username = $_SESSION['username'];
+?>
+
 <body>
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
@@ -177,7 +192,7 @@
                         buttons: [{
                             extend: 'pdf',
                             exportOptions: {
-                                columns: [0, 1, 2] // Column index which needs to export
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7] // Column index which needs to export
                             }
                         }, ]
 

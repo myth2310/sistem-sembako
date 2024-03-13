@@ -45,6 +45,21 @@ $koneksi->close();
 
 <?php include('layout/head.php'); ?>
 
+<?php
+session_start();
+
+// Periksa apakah pengguna sudah login
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Ambil username dari sesi
+$username = $_SESSION['username'];
+?>
+
+<?php include('layout/head.php'); ?>
+
 <body>
     <div id="app">
         <div class="main-wrapper main-wrapper-1">

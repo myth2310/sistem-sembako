@@ -12,6 +12,21 @@ $result_opname = $koneksi->query($query_opname);
 
 <?php include('layout/head.php'); ?>
 
+<?php
+session_start();
+
+// Periksa apakah pengguna sudah login
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Ambil username dari sesi
+$username = $_SESSION['username'];
+?>
+
+<?php include('layout/head.php'); ?>
+
 <body>
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
@@ -98,8 +113,8 @@ $result_opname = $koneksi->query($query_opname);
                                                             echo "<td>" . $no++ . "</td>";
 
                                                             // Mengubah format tanggal dari "tahun-bulan-hari" menjadi "hari-bulan-tahun"
-                                                            $tanggal_opname = date('d-m-Y', strtotime($row_opname['tanggal']));
-                                                            echo "<td>" . $tanggal_opname . "</td>"; // Menampilkan tanggal dengan format "hari-bulan-tahun"
+                                                           
+                                                            echo "<td>" . date('d F Y', strtotime($row_opname['tanggal'])). "</td>"; // Menampilkan tanggal dengan format "hari-bulan-tahun"
 
                                                             echo "<td>" . $row_opname['nama_item'] . "</td>";
                                                             echo "<td>" . $row_opname['stok_opname'] . "</td>";

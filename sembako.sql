@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2024 at 11:04 AM
+-- Generation Time: Mar 13, 2024 at 04:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -125,7 +125,7 @@ CREATE TABLE `opname` (
   `stok_opname` int(11) NOT NULL,
   `balance` varchar(255) NOT NULL,
   `keterangan` varchar(255) NOT NULL,
-  `tanggal` date DEFAULT NULL
+  `tanggal` date DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -134,12 +134,7 @@ CREATE TABLE `opname` (
 
 INSERT INTO `opname` (`id_opname`, `id_item`, `stok_opname`, `balance`, `keterangan`, `tanggal`) VALUES
 (8, 1, 10, 'Deskripsi opname', 'Keterangan opname', '2024-03-13'),
-(16, 6, 20, 'Kurang 26', 'rusak', '2024-03-13'),
-(17, 6, 20, 'Kurang 24', 'expt', '2024-03-13'),
-(18, 6, 20, 'Kurang 44', 'hilang', '2024-03-13'),
-(19, 7, 5, 'Kurang 25', 'hilang 10 rusak 15', '2024-03-13'),
-(20, 7, 30, 'Benar', 'sesuai', '2024-03-13'),
-(21, 6, 62, 'Benar', 'sesuai', '2024-03-13');
+(23, 6, 9, 'Kurang 53', 'Tulis Keterangan', '2024-03-13');
 
 -- --------------------------------------------------------
 
@@ -168,6 +163,27 @@ INSERT INTO `transaksi` (`id_transaksi`, `no_transaksi`, `tanggal`, `nama_pelang
 (29, 'TR42776746', '2024-03-13', 'afddfsf', 100000, 0, 1000000, 900000.00, 'dfsfsvvs'),
 (30, 'TR23227232', '2024-03-13', 'adi', 90000, 10, 100000, 10000.00, 'dfsfsdfsf'),
 (31, 'TR13622229', '2024-03-13', 'adi', 153000, 10, 160000, 7000.00, 'dsdfsd');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id_users` int(5) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `role` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id_users`, `username`, `role`, `password`) VALUES
+(1, 'admin', 'Admin', 'admin'),
+(2, 'kasir', 'Kasir', 'kasir');
 
 --
 -- Indexes for dumped tables
@@ -212,6 +228,12 @@ ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id_transaksi`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id_users`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -243,13 +265,19 @@ ALTER TABLE `member`
 -- AUTO_INCREMENT for table `opname`
 --
 ALTER TABLE `opname`
-  MODIFY `id_opname` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_opname` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
   MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id_users` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

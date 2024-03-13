@@ -1,5 +1,36 @@
 <?php include('layout/head.php'); ?>
 
+<?php include('layout/head.php'); ?>
+
+<?php
+session_start();
+
+// Periksa apakah pengguna sudah login
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Ambil username dari sesi
+$username = $_SESSION['username'];
+$role = $_SESSION['role']; 
+?>
+
+<?php
+include('koneksi/config.php');
+
+$bulan_sekarang = date('m');
+$tahun_sekarang = date('Y');
+
+$query_total_harga = "SELECT SUM(total_harga) AS total_harga 
+                      FROM transaksi 
+                      WHERE MONTH(tanggal) = $bulan_sekarang 
+                      AND YEAR(tanggal) = $tahun_sekarang";
+
+$hasil_total_harga = $koneksi->query($query_total_harga);
+$row_total_harga = $hasil_total_harga->fetch_assoc();
+$total_harga_bulan_ini = $row_total_harga['total_harga'];
+?>
 
 
 <body>
@@ -26,6 +57,15 @@
                                         <h4>Riwayat Pembayaran</h4>
                                     </div>
                                     <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                          
+                                                <div class="alert alert-success" role="alert">
+                                                <p style="font-size: 25px;" class="font-weight-bold">Pendapatan Perbulan (<?php echo date('F Y'); ?>)</p>
+                                                    <p style="font-size: 20px;" class="mt-2"><?php echo 'Rp.'.number_format($total_harga_bulan_ini, 0, ',', '.'); ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div style="margin-bottom: 40px;">
                                             <p style="font-size: 20px;" class="font-weight-bold">Filter Transaksi</p>
@@ -79,8 +119,12 @@
                                                                 echo "<td>" . $row['nama_pelanggan'] . "</td>";
                                                                 echo "<td>
                                                                         <!-- Tombol aksi -->
-                                                                        <a class='btn btn-warning btn-sm px-4 mt-2' href='print_invoice_riwayat.php?id_transaksi=" . $row['id_transaksi'] . "'>Print</a>
-                                                                        <a class='btn btn-danger btn-sm px-4 mt-2' href='hapus_transaksi.php?id_transaksi=" . $row['id_transaksi'] . "'>Hapus</a>
+                                                                        <a class='btn btn-warning btn-sm px-4 mt-2' href='print_invoice_riwayat.php?id_transaksi=" . $row['id_transaksi'] . "'>Print</a>  
+                                                                       
+                                                                        if ($role === 'Admin') :
+                                                                            <a class='btn btn-danger btn-sm px-4 mt-2' href='hapus_transaksi.php?id_transaksi=" . $row['id_transaksi'] . "'>Hapus</a>
+                                                                        endif;                                                             
+                                                                      
                                                                         <a class='btn btn-primary btn-sm px-4 mt-2' href='detail_transaksi.php?id_transaksi=" . $row['id_transaksi'] . "''>Detail</a>
                                                                        
                                                                       </td>";
