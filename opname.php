@@ -210,7 +210,7 @@ $username = $_SESSION['username'];
                 buttons: [{
                     extend: 'pdf',
                     exportOptions: {
-                        columns: [0, 1, 2] // Column index which needs to export
+                        columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
                     }
                 }, ]
 
