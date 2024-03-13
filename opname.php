@@ -31,9 +31,47 @@ $result_opname = $koneksi->query($query_opname);
                             <div class="col-lg-12 col-md-12 col-sm-12">
 
                                 <!-- Tabel Items -->
+                                <!-- Tabel Nama Item dan Jumlah Satuan -->
                                 <div class="card mt-4">
                                     <div class="card-header">
-                                        <h4>Stock Opname</h4>
+                                        <h4>Informasi Item</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table mt-3">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Nama Item</th>
+                                                        <th>Jumlah Item</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $query_item = "SELECT nama_item, jumlah_satuan FROM item";
+                                                    $result_item = $koneksi->query($query_item);
+                                                    if ($result_item->num_rows > 0) {
+                                                        $no = 1;
+                                                        while ($row_item = $result_item->fetch_assoc()) {
+                                                            echo "<tr>";
+                                                            echo "<td>" . $no++ . "</td>";
+                                                            echo "<td>" . $row_item['nama_item'] . "</td>";
+                                                            echo "<td>" . $row_item['jumlah_satuan'] . "</td>";
+                                                            echo "</tr>";
+                                                        }
+                                                    } else {
+                                                        echo "<tr><td colspan='3'>Tidak ada data nama item</td></tr>";
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Tabel Nama Item dan Jumlah Satuan -->
+                                <div class="card mt-4">
+                                    <div class="card-header">
+                                        <h4>Cek Stock Opname</h4>
                                     </div>
                                     <div class="card-body">
                                         <a href="tambah_opname.php" class="btn btn-primary mb-3">Tambah</a>
@@ -45,9 +83,8 @@ $result_opname = $koneksi->query($query_opname);
                                                         <th>No</th>
                                                         <th>Tanggal</th>
                                                         <th>Nama Item</th>
-                                                        <th>Jumlah</th>
-                                                        <th>Stok Opname</th>
-                                                        <th>Deskripsi</th>
+                                                        <th>Jumlah Fisik</th>
+                                                        <th>Balance</th>
                                                         <th>Keterangan</th>
                                                         <th>Aksi</th>
                                                     </tr>
@@ -65,7 +102,6 @@ $result_opname = $koneksi->query($query_opname);
                                                             echo "<td>" . $tanggal_opname . "</td>"; // Menampilkan tanggal dengan format "hari-bulan-tahun"
 
                                                             echo "<td>" . $row_opname['nama_item'] . "</td>";
-                                                            echo "<td>" . $row_opname['jumlah_satuan'] . "</td>"; // Mengambil data dari jumlah_satuan
                                                             echo "<td>" . $row_opname['stok_opname'] . "</td>";
                                                             echo "<td>" . $row_opname['deskripsi'] . "</td>";
                                                             echo "<td><input type='text' name='keterangan_" . $row_opname['id_opname'] . "' value='" . $row_opname['keterangan'] . "'></td>";
