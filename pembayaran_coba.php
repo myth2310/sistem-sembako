@@ -42,14 +42,14 @@
                         </div>
                         <div class="row">
                           <div class="col-md-12 mb-4">
-                            <button type="button" class="btn btn-success" id="btnTambahItem" onclick="addNewItem()">Transkasi Baru</button>
+                            <button type="button" class="btn btn-success" id="btnTambahItem" onclick="addNewItem()">Transaksi Baru</button>
                           </div>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-4 offset-md-8">
                           <div class="form-group">
-                            <label for="totalHargaInput" class="text-dark">Harus Dibayar (Rp.)<span class='red'> *</span></label>
+                            <label for="totalHargaInput" class="text-dark">Harus Dibayar<span class='red'> *</span></label>
                             <input type="text" id="totalHargaInput" class="form-control" name="total_harga" value="0" readonly />
                           </div>
                         </div>
@@ -57,27 +57,27 @@
                           <div class="form-group">
                             <label for="nama" class="text-dark">Nama Pelanggan<span class='red'> *</span></label>
                             <div class="d-flex">
-                              <input class="form-control mr-2" type="text" name="nama" id="nama" value="" />
+                              <input class="form-control mr-2" type="text" name="nama" id="nama" value="" required />
                               <button type="button" class="btn btn-warning" id="cekDiskonBtn">Cek Diskon</button>
                             </div>
                           </div>
                         </div>
                         <div class="col-md-4 offset-md-8">
                           <div class="form-group">
-                            <label for="diskon" class="text-dark">Diskon (%)<span class='red'> *</span></label>
+                            <label for="diskon" class="text-dark">Diskon<span class='red'> *</span></label>
                             <input class="form-control" type="number" name="diskon" id="diskon" readonly />
                           </div>
                         </div>
                         <div class="col-md-4 offset-md-8">
                           <div class="form-group">
-                            <label for="uang_diterima" class="text-dark">Bayar (Rp.)<span class='red'> *</span></label>
+                            <label for="uang_diterima" class="text-dark">Bayar<span class='red'> *</span></label>
                             <input class="form-control" type="number" name="uang_diterima" id="uang_diterima" required />
                           </div>
                         </div>
                         <div class="col-md-4 offset-md-8">
                           <div class="form-group">
-                            <label for="kembalian" class="text-dark">Kembalian (Rp.)<span class='red'> *</span></label>
-                            <input class="form-control" type="number" name="kembalian" id="kembalian" readonly />
+                            <label for="kembalian" class="text-dark">Kembalian<span class='red'> *</span></label>
+                            <input class="form-control" type="text" name="kembalian" id="kembalian" readonly />
                           </div>
                         </div>
                         <!-- Keterangan -->
@@ -166,8 +166,7 @@
             itemContainer.find(".jenis_satuan").val(data.jenis_satuan);
             itemContainer.find(".jumlah_satuan").val(0);
             itemContainer.find(".jumlah_satuan").attr("data-max-stock", data.jumlah_satuan);
-            itemContainer.find(".harga_beli").val(data.harga_beli);
-
+            itemContainer.find(".harga_beli").val(data.harga_jual);
             // Recalculate total harga_beli
             recalculateTotal();
           }
@@ -193,8 +192,15 @@
           var totalPerSatuan = jumlahSatuan * hargaBeli;
           totalHargaBeli += totalPerSatuan;
 
-          // Update the total per/satuan field
-          $(this).find(".total_per_satuan").val(totalPerSatuan.toFixed());
+          var formattedTotalPerSatuan = totalPerSatuan.toLocaleString('id-ID', {
+            style: 'currency',
+            currency: 'IDR'
+          });
+
+          formattedTotalPerSatuan = formattedTotalPerSatuan.replace(/,/g, '.');
+          formattedTotalPerSatuan = formattedTotalPerSatuan.replace('Rp', '');
+          $(this).find(".total_per_satuan").val(formattedTotalPerSatuan);
+
         });
 
 
@@ -202,7 +208,17 @@
         var diskonAmount = (diskon / 100) * totalHargaBeli;
         var totalAfterDiskon = totalHargaBeli - diskonAmount;
 
-        $("#totalHargaInput").val(totalAfterDiskon);
+        // Format the numeric value as currency
+        var formattedTotal = totalAfterDiskon.toLocaleString('id-ID', {
+          style: 'currency',
+          currency: 'IDR'
+        });
+
+        formattedTotal = formattedTotal.replace('Rp', '');
+        formattedTotal = formattedTotal.replace(/,/g, '.');
+        // Set the formatted value to the input field
+        $("#totalHargaInput").val(formattedTotal);
+
         var uangDiterima = parseFloat($("#uang_diterima").val()) || 0;
 
         // Check if uangDiterima is not NaN and not 0
@@ -211,7 +227,16 @@
           var kembalian = uangDiterima - totalAfterDiskon;
 
           // Update the kembalian input field
-          $("#kembalian").val(kembalian.toFixed());
+          var formattedKembalian = kembalian.toLocaleString('id-ID', {
+            style: 'currency',
+            currency: 'IDR'
+          });
+
+          formattedKembalian = formattedKembalian.replace('Rp', '');
+          formattedKembalian = formattedKembalian.replace(/,/g, '.');
+          
+          // Set the formatted value to the input field with the id kembalian
+          $("#kembalian").val(formattedKembalian);
         } else {
           // Set kembalian to empty if uangDiterima is not entered
           $("#kembalian").val("");
@@ -296,14 +321,14 @@
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                <label for="harga_beli" class="text-dark">Harga (Rp.)<span class='red'> *</span></label>
-                <input class="form-control harga_beli" type="number" name="harga_beli_${itemIndex}" readonly />
+                <label for="harga_beli" class="text-dark">Harga<span class='red'> *</span></label>
+                <input class="form-control harga_beli" type="number" name="harga_beli_${itemIndex}"  readonly />
             </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="total_per_satuan" class="text-dark">Total (Rp.)<span class='red'> *</span></label>
-            <input class="form-control total_per_satuan" type="number" name="total_per_satuan_${itemIndex}" readonly />
+            <label for="total_per_satuan" class="text-dark">Total<span class='red'> *</span></label>
+            <input class="form-control total_per_satuan" type="text" name="total_per_satuan_${itemIndex}" readonly />
           </div>
         </div>
 

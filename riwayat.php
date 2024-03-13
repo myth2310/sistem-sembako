@@ -28,6 +28,27 @@
                                     </div>
                                     <div class="card-body">
 
+                                        <div style="margin-bottom: 40px;">
+                                            <p style="font-size: 20px;" class="font-weight-bold">Filter Transaksi</p>
+                                            <form id="searchForm">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <input type="text" class="form-control" id="namaPelanggan" placeholder="Nama Pelanggan" name="namaPelanggan">
+                                                    </div>
+                                                    <div class="col">
+                                                        <select id="sorting" class="form-control" name="sorting">
+                                                            <option value="terlama">Terlama</option>
+                                                            <option value="terbaru">Terbaru</option>
+                                                        </select>
+
+                                                    </div>
+                                                    <div class="col">
+                                                        <button type="button" class="btn btn-success" onclick="searchData()">Filter Data</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <hr>
+                                        </div>
                                         <div class="table-responsive">
                                             <table id='empTable' class='display dataTable'>
                                                 <thead>
@@ -55,7 +76,7 @@
                                                             while ($row = $result->fetch_assoc()) {
                                                                 echo "<tr>";
                                                                 echo "<td>" . $row['no_transaksi'] . "</td>";
-                                                                echo "<td>" . date('d F Y', strtotime($row['tanggal'])). "</td>";
+                                                                echo "<td>" . date('d F Y', strtotime($row['tanggal'])) . "</td>";
                                                                 echo "<td>" . $row['nama_pelanggan'] . "</td>";
                                                                 echo "<td>
                                                                         <!-- Tombol aksi -->
@@ -128,6 +149,7 @@
                 $(document).ready(function() {
                     var empDataTable = $('#empTable').DataTable({
                         dom: 'Blfrtip',
+                        searching: false,
                         buttons: [{
                                 extend: 'copy',
                             },
@@ -167,6 +189,24 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
             <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 
+            <script>
+                function searchData() {
+                    var namaPelanggan = $('#namaPelanggan').val();
+                    var sorting = $('#sorting').val();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'search_transaksi.php', // Ganti dengan nama file PHP yang akan memproses pencarian
+                        data: {
+                            namaPelanggan: namaPelanggan,
+                            sorting: sorting
+                        },
+                        success: function(data) {
+                            $('#empTable tbody').html(data);
+                        }
+                    });
+                }
+            </script>
 
 </body>
 

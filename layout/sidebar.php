@@ -8,9 +8,9 @@
   <ul class="sidebar-menu">
     <li class="menu-header">Dashboard</li>
     <li class="active"><a class="nav-link" href="index.php"><i class="fas fa-fire"></i><span>Dashboard</span></a></li>
-    <li class="menu-header">Pembayaran</li>
-    <li><a class="nav-link" href="pembayaran.php"><i class="fas fa-wallet"></i><span>Pembayaran</span></a></li>
-    <li><a class="nav-link" href="riwayat.php"><i class="fas fa-wallet"></i><span>Riwayat Pembayaran</span></a></li>
+    <li class="menu-header">Transaksi</li>
+    <li><a class="nav-link" href="pembayaran.php"><i class="fas fa-wallet"></i><span>Transkasi</span></a></li>
+    <li><a class="nav-link" href="riwayat.php"><i class="fas fa-wallet"></i><span>Riwayat Transaksi</span></a></li>
     <li class="menu-header">Master Items</li>
     <li><a class="nav-link" href="kategori.php"><i class="fas fa-wallet"></i><span>Kategori</span></a></li>
     <li><a class="nav-link" href="item.php"><i class="fas fa-wallet"></i><span>Item</span></a></li>

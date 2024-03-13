@@ -94,9 +94,9 @@ $koneksi->close();
                                                                 echo "<td>" . $data['nama_item'] . "</td>";
                                                                 echo "<td>" . $data['jenis_satuan'] . "</td>";
                                                                 echo "<td>" . $data['jumlah'] . "</td>";
-                                                                echo "<td> Rp." . number_format($data['harga_beli'], 0, ',', '.'). "</td>";
-                                                                echo "<td> Rp." .  number_format($data['total_per_satuan'], 0, ',', '.'). "</td>";
-                                                              
+                                                                echo "<td> Rp." . number_format($data['harga_beli'], 0, ',', '.') . "</td>";
+                                                                echo "<td> Rp." .  number_format($data['total_per_satuan'], 0, ',', '.') . "</td>";
+
 
                                                                 echo "</tr>";
                                                             }
@@ -126,16 +126,16 @@ $koneksi->close();
                                                         <p><strong>Harga Total</strong></p>
                                                     </div>
                                                     <div class="col">
-                                                        <p class="font-weight-bold"> :  Rp. <?php echo number_format($row['total_harga'], 0, ',', '.'); ?> </p>
+                                                        <p class="font-weight-bold"> : Rp. <?php echo number_format($row['total_harga'], 0, ',', '.'); ?> </p>
                                                     </div>
                                                 </div>
-                                               
+
                                                 <div class="row">
                                                     <div class="co-6">
                                                         <p><strong>Uang diterima</strong></p>
                                                     </div>
                                                     <div class="col">
-                                                        <p class="font-weight-bold"> :  Rp. <?php echo number_format($row['uang_terima'], 0, ',', '.'); ?>  </p>
+                                                        <p class="font-weight-bold"> : Rp. <?php echo number_format($row['uang_terima'], 0, ',', '.'); ?> </p>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -143,12 +143,19 @@ $koneksi->close();
                                                         <p><strong>Kembalian</strong></p>
                                                     </div>
                                                     <div class="col">
-                                                        <p class="font-weight-bold"> :  Rp. <?php echo number_format($row['kembalian'], 0, ',', '.'); ?>  </p>
+                                                        <p class="font-weight-bold"> : Rp. <?php echo number_format($row['kembalian'], 0, ',', '.'); ?> </p>
                                                     </div>
                                                 </div>
+
+
+
+
                                             </div>
 
                                         </div>
+
+
+                                       
                                     </div>
                                 </div>
                             </div>

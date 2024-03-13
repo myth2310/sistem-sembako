@@ -46,5 +46,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $updateItemStmt->execute();
     }
 
-    header("Location: riwayat.php");
+    header("Location: print_invoice_riwayat.php?id_transaksi=" . $id_transaksi);
 }
