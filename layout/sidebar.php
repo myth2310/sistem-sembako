@@ -1,9 +1,9 @@
 <aside id="sidebar-wrapper">
   <div class="sidebar-brand">
-    <a href="index.php">Stisla</a>
+    <a href="index.php">Toko</a>
   </div>
   <div class="sidebar-brand sidebar-brand-sm">
-    <a href="index.php">St</a>
+    <a href="index.php">Toko</a>
   </div>
   <ul class="sidebar-menu">
     <li class="menu-header">Dashboard</li>
