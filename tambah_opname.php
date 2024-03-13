@@ -1,6 +1,7 @@
 <?php
 // Pastikan file koneksi/config.php sudah di-include di sini
 include('koneksi/config.php');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Ambil data dari form
     $nama_item = $_POST['nama'];
@@ -30,6 +31,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query_simpan = "INSERT INTO opname (id_item, stok_opname, deskripsi, keterangan) VALUES ('$id_item', '$stok_opname', '$deskripsi', 'Tulis Keterangan')";
         if ($koneksi->query($query_simpan) === TRUE) {
             echo "Data berhasil disimpan.";
+            // Redirect ke halaman opname.php
+            header("Location: opname.php");
+            exit(); // Pastikan untuk menghentikan eksekusi skrip setelah melakukan redirect
         } else {
             echo "Error: " . $query_simpan . "<br>" . $koneksi->error;
         }
@@ -61,20 +65,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <section class="section">
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12">
-
                                 <!-- Form Cek Stock Opname -->
-                                <form method="post" action="">
-                                    <div class="form-group">
-                                        <label for="nama">Nama Item:</label>
-                                        <input type="text" class="form-control" id="nama" name="nama" required>
+                                <div class="card mt-4">
+                                    <div class="card-header">
+                                        <h4>Cek Stock Opname</h4>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="stok_opname">Stok Opname:</label>
-                                        <input type="number" class="form-control" id="stok_opname" name="stok_opname" required>
+                                    <div class="card-body">
+                                        <form method="post" action="">
+                                            <div class="form-group">
+                                                <label for="nama">Nama Item:</label>
+                                                <input type="text" class="form-control" id="nama" name="nama" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="stok_opname">Stok Opname:</label>
+                                                <input type="number" class="form-control" id="stok_opname" name="stok_opname" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Cek Stok Opname</button>
+                                        </form>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Cek Stok Opname</button>
-                                </form>
-
+                                </div>
                             </div>
                         </div>
                     </section>

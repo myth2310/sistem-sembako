@@ -139,12 +139,15 @@
                             // Sembunyikan field restok setelah restok berhasil
                             var restockField = document.getElementById('restockField_' + itemId);
                             restockField.style.display = 'none';
+                            // Refresh halaman item
+                            window.location.reload();
                         })
                         .catch(error => {
                             // Tangani kesalahan jika terjadi
                             console.error('Error:', error);
                         });
                 }
+
             </script>
 
 </body>

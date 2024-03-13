@@ -84,30 +84,32 @@ $result_opname = $koneksi->query($query_opname);
             <?php include('layout/js.php'); ?>
         </div>
     </div>
-    <script>
-        // Tangkap klik tombol update
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('update-btn')) {
-                // Ambil ID opname dari atribut data-id
-                var idOpname = e.target.getAttribute('data-id');
-                // Ambil nilai keterangan dari input field di baris yang sama
-                var keterangan = document.querySelector('input[name="keterangan_' + idOpname + '"]').value;
+<script>
+    // Tangkap klik tombol update
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('update-btn')) {
+            // Ambil ID opname dari atribut data-id
+            var idOpname = e.target.getAttribute('data-id');
+            // Ambil nilai keterangan dari input field di baris yang sama
+            var keterangan = document.querySelector('input[name="keterangan_' + idOpname + '"]').value;
 
-                // Kirim data yang diubah ke file PHP menggunakan AJAX
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', 'proses_update_opname.php', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        // Tambahkan kode untuk menangani respon dari server (jika diperlukan)
-                        console.log(xhr.responseText);
-                        // Jika pembaruan berhasil, Anda bisa tambahkan logika lain di sini
-                    }
-                };
-                xhr.send('id_opname=' + idOpname + '&keterangan=' + encodeURIComponent(keterangan)); // Perlu menggunakan encodeURIComponent untuk menghindari masalah karakter khusus
-            }
-        });
-    </script>
+            // Kirim data yang diubah ke file PHP menggunakan AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'proses_update_opname.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Tambahkan kode untuk menangani respon dari server (jika diperlukan)
+                    console.log(xhr.responseText);
+                    // Jika pembaruan berhasil, muat ulang halaman
+                    location.reload(); // Ini akan memuat ulang halaman
+                }
+            };
+            xhr.send('id_opname=' + idOpname + '&keterangan=' + encodeURIComponent(keterangan)); // Perlu menggunakan encodeURIComponent untuk menghindari masalah karakter khusus
+        }
+    });
+</script>
+
 
 
 </body>
