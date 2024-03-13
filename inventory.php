@@ -29,7 +29,7 @@
                                         <h4>Inventory</h4>
                                     </div>
                                     <div class="card-body">
-                                        <a href="#" class="btn btn-primary mb-3" onclick="printInventory()">Print Inventory</a>
+                                        <!-- <a href="#" class="btn btn-primary mb-3" onclick="printInventory()">Print Inventory</a> -->
                                         <div class="table-responsive">
                                             <table id="empTable" class="table mt-3" id="inventoryTable">
                                                 <thead>
@@ -113,7 +113,7 @@
                         buttons: [{
                             extend: 'pdf',
                             exportOptions: {
-                                columns: [0, 1, 2] // Column index which needs to export
+                                columns: [0, 1, 2, 3, 4, 5] // Column index which needs to export
                             }
                         }, ]
 
