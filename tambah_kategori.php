@@ -1,6 +1,7 @@
 <?php
 include('koneksi/config.php');
 
+// Jika form disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kategori = $_POST['kategori'];
     $tanggal = $_POST['tanggal'];
@@ -13,6 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error: " . $query . "<br>" . $koneksi->error;
     }
 }
+
+// Inisialisasi tanggal default
+$tanggal_default = date("Y-m-d");
 
 $koneksi->close();
 ?>
@@ -50,7 +54,7 @@ $koneksi->close();
                                             </div>
                                             <div class="form-group">
                                                 <label for="tanggal">Tanggal:</label>
-                                                <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                                                <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo $tanggal_default; ?>" required>
                                             </div>
                                             <button type="submit" class="btn btn-primary">Simpan</button>
                                             <a href="kategori.php" class="btn btn-secondary">Batal</a>

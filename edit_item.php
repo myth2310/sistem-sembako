@@ -8,8 +8,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $jenis_satuan = $_POST['jenis_satuan'];
     $jumlah_satuan = $_POST['jumlah_satuan'];
     $isi_satuan = $_POST['isi_satuan'];
-    $harga_beli = $_POST['harga_beli'];
-    $harga_jual = $_POST['harga_jual'];
+    $harga_beli = intval(unformatRupiah($_POST['harga_beli'])); // Mengubah nilai menjadi integer
+    $harga_jual = intval(unformatRupiah($_POST['harga_jual'])); // Mengubah nilai menjadi integer
 
     // Periksa apakah kategori_id yang dikirimkan ada dalam tabel kategori
     $check_kategori = "SELECT * FROM kategori WHERE id='$kategori_id'";
@@ -27,6 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Jika kategori_id tidak valid, tampilkan pesan kesalahan
         echo "Error: Kategori tidak valid.";
     }
+}
+
+// Function untuk menghapus format "Rp" dan koma
+function unformatRupiah($str)
+{
+    return preg_replace("/[^0-9]/", "", $str);
 }
 
 $id_item = $_GET['id_item'];
@@ -102,12 +108,13 @@ $koneksi->close();
                                             </div>
                                             <div class="form-group">
                                                 <label for="harga_beli">Harga Beli:</label>
-                                                <input type="text" class="form-control" id="harga_beli" name="harga_beli" value="<?php echo $row['harga_beli']; ?>" required>
+                                                <input type="text" class="form-control" id="harga_beli" name="harga_beli" value="Rp. <?php echo $row['harga_beli']; ?>" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="harga_jual">Harga Jual:</label>
-                                                <input type="text" class="form-control" id="harga_jual" name="harga_jual" value="<?php echo $row['harga_jual']; ?>" required>
+                                                <input type="text" class="form-control" id="harga_jual" name="harga_jual" value="Rp. <?php echo $row['harga_jual']; ?>" required>
                                             </div>
+
                                             <button type="submit" class="btn btn-primary">Simpan</button>
                                             <a href="item.php" class="btn btn-secondary">Batal</a>
                                         </form>
@@ -126,6 +133,42 @@ $koneksi->close();
             <?php include('layout/js.php'); ?>
         </div>
     </div>
+    <script>
+        // Function untuk format angka menjadi Rupiah dengan simbol "Rp"
+        function formatRupiah(angka) {
+            var reverse = angka.toString().split('').reverse().join('');
+            var ribuan = reverse.match(/\d{1,3}/g);
+            ribuan = ribuan.join('.').split('').reverse().join('');
+            return 'Rp ' + ribuan;
+        }
+
+        // Function untuk menghapus format Rupiah dan mengembalikan angka saja
+        function unformatRupiah(str) {
+            return parseInt(str.replace(/[^0-9]+/g, ''));
+        }
+
+        // Event listener saat form disubmit
+        document.getElementById('form_item').addEventListener('submit', function(e) {
+            var hargaBeli = document.getElementById('harga_beli').value;
+            var hargaJual = document.getElementById('harga_jual').value;
+
+            // Menghapus format "Rp" dan koma sebelum mengirim nilai ke server
+            document.getElementById('harga_beli').value = unformatRupiah(hargaBeli);
+            document.getElementById('harga_jual').value = unformatRupiah(hargaJual);
+        });
+
+        // Event listener untuk memformat input harga beli saat mengetik
+        document.getElementById('harga_beli').addEventListener('input', function(e) {
+            var value = this.value;
+            this.value = formatRupiah(unformatRupiah(value));
+        });
+
+        // Event listener untuk memformat input harga jual saat mengetik
+        document.getElementById('harga_jual').addEventListener('input', function(e) {
+            var value = this.value;
+            this.value = formatRupiah(unformatRupiah(value));
+        });
+    </script>
 </body>
 
 </html>
