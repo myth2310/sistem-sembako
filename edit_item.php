@@ -5,7 +5,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_item = $_POST['id_item'];
     $kategori_id = $_POST['kategori_id'];
     $nama_item = $_POST['nama_item'];
-    $merk = $_POST['merk'];
     $jenis_satuan = $_POST['jenis_satuan'];
     $jumlah_satuan = $_POST['jumlah_satuan'];
     $isi_satuan = $_POST['isi_satuan'];
@@ -17,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result_check_kategori = $koneksi->query($check_kategori);
     if ($result_check_kategori->num_rows > 0) {
         // Jika kategori_id valid, jalankan pernyataan SQL untuk memperbarui data
-        $query = "UPDATE item SET kategori_id='$kategori_id', nama_item='$nama_item', merk='$merk', jenis_satuan='$jenis_satuan', jumlah_satuan='$jumlah_satuan', isi_satuan='$isi_satuan', harga_beli='$harga_beli', harga_jual='$harga_jual' WHERE id_item='$id_item'";
+        $query = "UPDATE item SET kategori_id='$kategori_id', nama_item='$nama_item', jenis_satuan='$jenis_satuan', jumlah_satuan='$jumlah_satuan', isi_satuan='$isi_satuan', harga_beli='$harga_beli', harga_jual='$harga_jual' WHERE id_item='$id_item'";
         if ($koneksi->query($query) === TRUE) {
             header("Location: item.php");
             exit();
@@ -88,10 +87,6 @@ $koneksi->close();
                                             <div class="form-group">
                                                 <label for="nama_item">Nama Item:</label>
                                                 <input type="text" class="form-control" id="nama_item" name="nama_item" value="<?php echo $row['nama_item']; ?>" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="merk">Merk:</label>
-                                                <input type="text" class="form-control" id="merk" name="merk" value="<?php echo $row['merk']; ?>" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="jenis_satuan">Jenis Satuan:</label>

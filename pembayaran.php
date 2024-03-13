@@ -208,16 +208,22 @@
           var uangDiterima = parseFloat($("#uang_diterima").val()) || 0;
 
           // Check if uangDiterima is not NaN and not 0
-          if (!isNaN(uangDiterima) && uangDiterima !== 0) {
-              // Calculate kembalian
-              var kembalian = uangDiterima - totalAfterDiskon;
+            if (!isNaN(uangDiterima) && uangDiterima !== 0) {
+                // Calculate kembalian
+                var kembalian = uangDiterima - totalAfterDiskon;
 
-              // Format kembalian before setting its value
-              $("#kembalian").val(formatRupiah(kembalian));
-          } else {
-              // Set kembalian to empty if uangDiterima is not entered
-              $("#kembalian").val("");
-          }
+                // Check if kembalian is negative
+                if (kembalian < 0) {
+                    // Display an error message
+                    $("#kembalian").val("Pembayaran kurang!");
+                } else {
+                    // Format kembalian before setting its value
+                    $("#kembalian").val(formatRupiah(kembalian));
+                }
+            } else {
+                // Set kembalian to empty if uangDiterima is not entered
+                $("#kembalian").val("");
+            }
       }
 
       // Function to format number to Indonesian currency format
