@@ -27,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $deskripsi = "Lebih $lebih";
         }
 
-        // Simpan data ke dalam tabel opname
         $query_simpan = "INSERT INTO opname (id_item, stok_opname, deskripsi, keterangan) VALUES ('$id_item', '$stok_opname', '$deskripsi', 'Tulis Keterangan')";
         if ($koneksi->query($query_simpan) === TRUE) {
             echo "Data berhasil disimpan.";
@@ -72,13 +71,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
                                     <div class="card-body">
                                         <form method="post" action="">
-                                            <div class="form-group">
-                                                <label for="nama">Nama Item:</label>
-                                                <input type="text" class="form-control" id="nama" name="nama" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="stok_opname">Stok Opname:</label>
-                                                <input type="number" class="form-control" id="stok_opname" name="stok_opname" required>
+                                            <div class="item-container">
+                                                <div class="form-group">
+                                                    <label for="nama_item">Nama Item:</label>
+                                                    <input class="form-control id_item" type="text" name="id_item" style="display: none;" />
+                                                    <input class="form-control nama_item" type="text" name="nama_item" placeholder="Nama Item" required />
+                                                    <div class="result"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="jumlah_satuan">Stok Opname:</label>
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <input class="form-control" id="nilai" value="0" min="0" type="number" name="stok_opname" required />
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <button type="button" onclick="tambahNilai()" class="btn btn-danger">Tambah</button>
+                                                            <button type="button" onclick="kurangNilai()" class="btn btn-success">Kurang</button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                                             </div>
                                             <button type="submit" class="btn btn-primary">Cek Stok Opname</button>
                                         </form>
@@ -93,6 +106,77 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <?php include('layout/js.php'); ?>
+
+
+            <script>
+  function tambahNilai() {
+    var nilaiInput = document.getElementById("nilai");
+    var nilai = parseInt(nilaiInput.value, 10);
+    nilai += 1;
+    nilaiInput.value = nilai;
+  }
+
+  function kurangNilai() {
+    var nilaiInput = document.getElementById("nilai");
+    var nilai = parseInt(nilaiInput.value, 10);
+    if (nilai > 0) {
+      nilai -= 1;
+      nilaiInput.value = nilai;
+    }
+  }
+</script>
+
+
+
+            <script>
+                $(document).ready(function() {
+                    // Function to handle item search
+                    function handleItemSearch(inputElement) {
+                        var searchTerm = inputElement.val();
+                        var resultContainer = inputElement.parent().find(".result");
+
+                        if (searchTerm !== "") {
+                            $.ajax({
+                                type: "POST",
+                                url: "search_item.php",
+                                data: {
+                                    searchTerm: searchTerm
+                                },
+                                success: function(data) {
+                                    resultContainer.html(data);
+                                }
+                            });
+                        } else {
+                            resultContainer.empty();
+                        }
+                    }
+
+                    $(document).on("input", ".nama_item", function() {
+                        handleItemSearch($(this));
+                    });
+
+                    $(document).on("click", ".result li", function() {
+                        var selectedItem = $(this).text();
+                        var itemContainer = $(this).closest(".item-container");
+                        itemContainer.find(".nama_item").val(selectedItem);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "get_quantity.php",
+                            data: {
+                                selectedItem: selectedItem
+                            },
+                            success: function(response) {
+                                var data = JSON.parse(response);
+                                itemContainer.find(".id_item").val(data.id_item);
+                            }
+                        });
+
+                        itemContainer.find(".result").empty();
+                    });
+                });
+            </script>
+
         </div>
     </div>
 </body>

@@ -167,7 +167,7 @@
             itemContainer.find(".jenis_satuan").val(data.jenis_satuan);
             itemContainer.find(".jumlah_satuan").val(0);
             itemContainer.find(".jumlah_satuan").attr("data-max-stock", data.jumlah_satuan);
-            itemContainer.find(".harga_beli").val(data.harga_beli);
+            itemContainer.find(".harga_beli").val(data.harga_jual);
 
             // Recalculate total harga_beli
             recalculateTotal();
