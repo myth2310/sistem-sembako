@@ -2,7 +2,7 @@
 include('koneksi/config.php');
 
 // Ambil data dari tabel opname
-$query_opname = "SELECT item.nama_item, item.total_dibeli, opname.stok_opname, opname.deskripsi, opname.keterangan, opname.id_opname
+$query_opname = "SELECT item.nama_item, item.jumlah_satuan, opname.stok_opname, opname.deskripsi, opname.keterangan, opname.id_opname, opname.tanggal
                  FROM opname
                  INNER JOIN item ON opname.id_item = item.id_item";
 
@@ -43,6 +43,7 @@ $result_opname = $koneksi->query($query_opname);
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
+                                                        <th>Tanggal</th>
                                                         <th>Nama Item</th>
                                                         <th>Jumlah</th>
                                                         <th>Stok Opname</th>
@@ -58,16 +59,24 @@ $result_opname = $koneksi->query($query_opname);
                                                         while ($row_opname = $result_opname->fetch_assoc()) {
                                                             echo "<tr>";
                                                             echo "<td>" . $no++ . "</td>";
+
+                                                            // Mengubah format tanggal dari "tahun-bulan-hari" menjadi "hari-bulan-tahun"
+                                                            $tanggal_opname = date('d-m-Y', strtotime($row_opname['tanggal']));
+                                                            echo "<td>" . $tanggal_opname . "</td>"; // Menampilkan tanggal dengan format "hari-bulan-tahun"
+
                                                             echo "<td>" . $row_opname['nama_item'] . "</td>";
-                                                            echo "<td>" . $row_opname['total_dibeli'] . "</td>";
+                                                            echo "<td>" . $row_opname['jumlah_satuan'] . "</td>"; // Mengambil data dari jumlah_satuan
                                                             echo "<td>" . $row_opname['stok_opname'] . "</td>";
                                                             echo "<td>" . $row_opname['deskripsi'] . "</td>";
                                                             echo "<td><input type='text' name='keterangan_" . $row_opname['id_opname'] . "' value='" . $row_opname['keterangan'] . "'></td>";
-                                                            echo "<td><button class='btn btn-success update-btn' data-id='" . $row_opname['id_opname'] . "'>Update</button></td>";
+                                                            echo "<td>
+                                                                    <button class='btn btn-success update-btn' data-id='" . $row_opname['id_opname'] . "'>Update</button>
+                                                                    <button class='btn btn-danger delete-btn' data-id='" . $row_opname['id_opname'] . "'>Delete</button>
+                                                                </td>";
                                                             echo "</tr>";
                                                         }
                                                     } else {
-                                                        echo "<tr><td colspan='6'>Tidak ada data stok opname</td></tr>";
+                                                        echo "<tr><td colspan='8'>Tidak ada data stok opname</td></tr>";
                                                     }
                                                     ?>
                                                 </tbody>
@@ -111,9 +120,28 @@ $result_opname = $koneksi->query($query_opname);
             xhr.send('id_opname=' + idOpname + '&keterangan=' + encodeURIComponent(keterangan)); // Perlu menggunakan encodeURIComponent untuk menghindari masalah karakter khusus
         }
     });
+    document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('delete-btn')) {
+        var idOpname = e.target.getAttribute('data-id');
+
+        if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+            // Kirim data yang dihapus ke file PHP menggunakan AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'proses_delete_opname.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    // Jika penghapusan berhasil, muat ulang halaman
+                    location.reload();
+                }
+            };
+            xhr.send('id_opname=' + idOpname);
+            }
+        }
+    });
+
 </script>
-
-
 
 </body>
 

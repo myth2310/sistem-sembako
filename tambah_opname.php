@@ -27,8 +27,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $deskripsi = "Lebih $lebih";
         }
 
-        // Simpan data ke dalam tabel opname
-        $query_simpan = "INSERT INTO opname (id_item, stok_opname, deskripsi, keterangan) VALUES ('$id_item', '$stok_opname', '$deskripsi', 'Tulis Keterangan')";
+        // Tambahkan variabel untuk tanggal saat ini dengan format "hari bulan tahun"
+        $tanggal = date('Y-m-d');
+
+        // Simpan data ke dalam tabel opname, termasuk tanggal
+        $query_simpan = "INSERT INTO opname (id_item, stok_opname, deskripsi, keterangan, tanggal) VALUES ('$id_item', '$stok_opname', '$deskripsi', 'Tulis Keterangan', '$tanggal')";
         if ($koneksi->query($query_simpan) === TRUE) {
             echo "Data berhasil disimpan.";
             // Redirect ke halaman opname.php
@@ -45,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $koneksi->close();
 }
 ?>
+
 
 <?php include('layout/head.php'); ?>
 

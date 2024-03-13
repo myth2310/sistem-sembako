@@ -5,6 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Item - Print</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 
 <body>
@@ -47,20 +63,46 @@
         // Ambil data item dari hasil query
         $row = $result->fetch_assoc();
 
-        // Tampilkan detail item
-        echo "<h1>Detail Item</h1>";
-        echo "<p>ID Item: " . $row['id_item'] . "</p>";
-        echo "<p>Nama Item: " . $row['nama_item'] . "</p>";
-        echo "<p>Merk: " . $row['merk'] . "</p>";
-        echo "<p>Jenis Satuan: " . $row['jenis_satuan'] . "</p>";
-        echo "<p>Jumlah Satuan: " . $row['jumlah_satuan'] . "</p>";
-        echo "<p>Isi Satuan: " . $row['isi_satuan'] . "</p>";
-        echo "<p>Harga Beli: " . $row['harga_beli'] . "</p>";
-        echo "<p>Harga Jual: " . $row['harga_jual'] . "</p>";
+        // Fungsi untuk memformat harga menjadi format Rupiah
+        function formatHarga($harga) {
+            return 'Rp ' . number_format($harga, 0, ',', '.');
+        }
 
         // Tutup koneksi database
         $koneksi->close();
         ?>
+
+        <h1>Detail Item</h1>
+        <table>
+            <tr>
+                <th>ID Item</th>
+                <td><?php echo $row['id_item']; ?></td>
+            </tr>
+            <tr>
+                <th>Nama Item</th>
+                <td><?php echo $row['nama_item']; ?></td>
+            </tr>
+            <tr>
+                <th>Jenis Satuan</th>
+                <td><?php echo $row['jenis_satuan']; ?></td>
+            </tr>
+            <tr>
+                <th>Jumlah Satuan</th>
+                <td><?php echo $row['jumlah_satuan']; ?></td>
+            </tr>
+            <tr>
+                <th>Isi Satuan</th>
+                <td><?php echo $row['isi_satuan']; ?></td>
+            </tr>
+            <tr>
+                <th>Harga Beli</th>
+                <td><?php echo formatHarga($row['harga_beli']); ?></td>
+            </tr>
+            <tr>
+                <th>Harga Jual</th>
+                <td><?php echo formatHarga($row['harga_jual']); ?></td>
+            </tr>
+        </table>
     </div>
 
 </body>

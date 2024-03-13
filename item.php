@@ -58,8 +58,8 @@
                                                             echo "<td>" . $row['jenis_satuan'] . "</td>";
                                                             echo "<td>" . $row['jumlah_satuan'] . "</td>";
                                                             echo "<td>" . $row['isi_satuan'] . "</td>";
-                                                            echo "<td>" . $row['harga_beli'] . "</td>";
-                                                            echo "<td>" . $row['harga_jual'] . "</td>";
+                                                            echo "<td class='harga_beli'>" . $row['harga_beli'] . "</td>";
+                                                            echo "<td class='harga_jual'>" . $row['harga_jual'] . "</td>";
                                                             echo "<td>";
                                                             echo "<a href='edit_item.php?id_item=" . $row['id_item'] . "' class='btn btn-warning btn-sm'>Perbarui Data</a>";
                                                             echo "<a href='hapus_item.php?id_item=" . $row['id_item'] . "' class='btn btn-danger btn-sm'>Hapus</a>";
@@ -99,6 +99,27 @@
 
             <?php include('layout/js.php'); ?>
             <script>
+                $(document).ready(function() {
+                    // Function to format number to Indonesian currency format
+                    function formatRupiah(angka) {
+                        var reverse = angka.toString().split('').reverse().join(''),
+                            ribuan = reverse.match(/\d{1,3}/g);
+                        ribuan = ribuan.join('.').split('').reverse().join('');
+                        return 'Rp. ' + ribuan;
+                    }
+
+                    // Format harga beli dan harga jual saat dokumen siap
+                    $(".harga_beli").each(function() {
+                        var hargaBeli = parseFloat($(this).text());
+                        $(this).text(formatRupiah(hargaBeli));
+                    });
+
+                    $(".harga_jual").each(function() {
+                        var hargaJual = parseFloat($(this).text());
+                        $(this).text(formatRupiah(hargaJual));
+                    });
+                });
+
                 function printItem(id) {
                     // Buka halaman cetak item dalam jendela baru
                     var newWindow = window.open('print_item.php?id=' + id, '_blank');
