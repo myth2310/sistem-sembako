@@ -4,7 +4,7 @@ include('koneksi/config.php');
 $selectedItem = $_POST['selectedItem'];
 
 // Query untuk mendapatkan jumlah_stok berdasarkan selectedItem
-$query = "SELECT * FROM items WHERE nama_item = '$selectedItem'";
+$query = "SELECT * FROM item WHERE nama_item = '$selectedItem'";
 $result = mysqli_query($koneksi, $query);
 
 if ($result) {

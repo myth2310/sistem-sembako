@@ -2,7 +2,7 @@
 include('koneksi/config.php');
 
 // Ambil data dari tabel opname
-$query_opname = "SELECT item.nama_item, item.jumlah_satuan, opname.stok_opname, opname.deskripsi, opname.keterangan, opname.id_opname, opname.tanggal
+$query_opname = "SELECT item.nama_item, item.jumlah_satuan, opname.stok_opname, opname.balance, opname.keterangan, opname.id_opname, opname.tanggal
                  FROM opname
                  INNER JOIN item ON opname.id_item = item.id_item";
 
@@ -38,7 +38,7 @@ $result_opname = $koneksi->query($query_opname);
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table class="table mt-3">
+                                            <table id="empTable1" class="table mt-3">
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
@@ -77,7 +77,7 @@ $result_opname = $koneksi->query($query_opname);
                                         <a href="tambah_opname.php" class="btn btn-primary mb-3">Tambah</a>
                                         <div class="table-responsive">
                                             <!-- Tabel Stock Opname -->
-                                            <table class="table mt-3">
+                                            <table id="empTable" class="table mt-3">
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
@@ -103,7 +103,7 @@ $result_opname = $koneksi->query($query_opname);
 
                                                             echo "<td>" . $row_opname['nama_item'] . "</td>";
                                                             echo "<td>" . $row_opname['stok_opname'] . "</td>";
-                                                            echo "<td>" . $row_opname['deskripsi'] . "</td>";
+                                                            echo "<td>" . $row_opname['balance'] . "</td>";
                                                             echo "<td><input type='text' name='keterangan_" . $row_opname['id_opname'] . "' value='" . $row_opname['keterangan'] . "'></td>";
                                                             echo "<td>
                                                                     <button class='btn btn-success update-btn' data-id='" . $row_opname['id_opname'] . "'>Update</button>
@@ -132,52 +132,88 @@ $result_opname = $koneksi->query($query_opname);
             <?php include('layout/js.php'); ?>
         </div>
     </div>
-<script>
-    // Tangkap klik tombol update
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('update-btn')) {
-            // Ambil ID opname dari atribut data-id
-            var idOpname = e.target.getAttribute('data-id');
-            // Ambil nilai keterangan dari input field di baris yang sama
-            var keterangan = document.querySelector('input[name="keterangan_' + idOpname + '"]').value;
+    <script>
+        // Tangkap klik tombol update
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('update-btn')) {
+                // Ambil ID opname dari atribut data-id
+                var idOpname = e.target.getAttribute('data-id');
+                // Ambil nilai keterangan dari input field di baris yang sama
+                var keterangan = document.querySelector('input[name="keterangan_' + idOpname + '"]').value;
 
-            // Kirim data yang diubah ke file PHP menggunakan AJAX
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'proses_update_opname.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    // Tambahkan kode untuk menangani respon dari server (jika diperlukan)
-                    console.log(xhr.responseText);
-                    // Jika pembaruan berhasil, muat ulang halaman
-                    location.reload(); // Ini akan memuat ulang halaman
-                }
-            };
-            xhr.send('id_opname=' + idOpname + '&keterangan=' + encodeURIComponent(keterangan)); // Perlu menggunakan encodeURIComponent untuk menghindari masalah karakter khusus
-        }
-    });
-    document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('delete-btn')) {
-        var idOpname = e.target.getAttribute('data-id');
-
-        if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
-            // Kirim data yang dihapus ke file PHP menggunakan AJAX
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'proses_delete_opname.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    console.log(xhr.responseText);
-                    // Jika penghapusan berhasil, muat ulang halaman
-                    location.reload();
-                }
-            };
-            xhr.send('id_opname=' + idOpname);
+                // Kirim data yang diubah ke file PHP menggunakan AJAX
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'proses_update_opname.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        // Tambahkan kode untuk menangani respon dari server (jika diperlukan)
+                        console.log(xhr.responseText);
+                        // Jika pembaruan berhasil, muat ulang halaman
+                        location.reload(); // Ini akan memuat ulang halaman
+                    }
+                };
+                xhr.send('id_opname=' + idOpname + '&keterangan=' + encodeURIComponent(keterangan)); // Perlu menggunakan encodeURIComponent untuk menghindari masalah karakter khusus
             }
-        }
-    });
+        });
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('delete-btn')) {
+                var idOpname = e.target.getAttribute('data-id');
 
-</script>
+                if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+                    // Kirim data yang dihapus ke file PHP menggunakan AJAX
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'proses_delete_opname.php', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            console.log(xhr.responseText);
+                            // Jika penghapusan berhasil, muat ulang halaman
+                            location.reload();
+                        }
+                    };
+                    xhr.send('id_opname=' + idOpname);
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var empDataTable = $('#empTable1').DataTable({
+                dom: 'Blfrtip',
+                buttons: []
+
+            });
+
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            var empDataTable = $('#empTable').DataTable({
+                dom: 'Blfrtip',
+                buttons: [{
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [0, 1, 2] // Column index which needs to export
+                    }
+                }, ]
+
+            });
+
+        });
+    </script>
+
+    <!-- jQuery Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Datatable JS -->
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 
 </body>
 

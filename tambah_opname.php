@@ -1,50 +1,35 @@
 <?php
-
 include('koneksi/config.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    $nama_item = $_POST['nama'];
+    $id_item = $_POST['id_item'];
     $stok_opname = $_POST['stok_opname'];
+    $jumlah_satuan = $_POST['jumlah_satuan'];
 
-    $query_get_id = "SELECT id_item, jumlah_satuan FROM item WHERE nama_item = '$nama_item'";
-    $result_get_id = $koneksi->query($query_get_id);
-
-    if ($result_get_id->num_rows > 0) {
-        $row = $result_get_id->fetch_assoc();
-        $id_item = $row['id_item'];
-        $jumlah_satuan = $row['jumlah_satuan'];
-
-       
-        if ($stok_opname == $jumlah_satuan) {
-            $deskripsi = "Benar";
-        } elseif ($stok_opname < $jumlah_satuan) {
-            $kurang = $jumlah_satuan - $stok_opname;
-            $deskripsi = "Kurang $kurang";
-        } else {
-            $lebih = $stok_opname - $jumlah_satuan;
-            $deskripsi = "Lebih $lebih";
-        }
-
-
-        $query_simpan = "INSERT INTO opname (id_item, stok_opname, deskripsi, keterangan) VALUES ('$id_item', '$stok_opname', '$deskripsi', 'Tulis Keterangan')";
-        if ($koneksi->query($query_simpan) === TRUE) {
-            echo "Data berhasil disimpan.";
-          
-            header("Location: opname.php");
-            exit(); 
-        } else {
-            echo "Error: " . $query_simpan . "<br>" . $koneksi->error;
-        }
+    if ($stok_opname == $jumlah_satuan) {
+        $balance = "Benar";
+    } elseif ($stok_opname < $jumlah_satuan) {
+        $kurang = $jumlah_satuan - $stok_opname;
+        $balance = "Kurang $kurang";
     } else {
-        echo "Nama item tidak ditemukan dalam database.";
+        $lebih = $stok_opname - $jumlah_satuan;
+        $balance = "Lebih $lebih";
     }
 
-
-    $koneksi->close();
+    $query_simpan = "INSERT INTO opname (id_item, stok_opname, balance, keterangan) VALUES ('$id_item', '$stok_opname', '$balance', 'Tulis Keterangan')";
+    if ($koneksi->query($query_simpan) === TRUE) {
+        echo "Data berhasil disimpan.";
+        header("Location: opname.php");
+        exit();
+    } else {
+        echo "Error: " . $query_simpan . "<br>" . $koneksi->error;
+    }
+} else {
+    echo "Nama item tidak ditemukan dalam database.";
 }
-?>
 
+$koneksi->close();
+?>
 
 <?php include('layout/head.php'); ?>
 
@@ -71,11 +56,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <h4>Cek Stock Opname</h4>
                                     </div>
                                     <div class="card-body">
-                                        <form method="post" action="">
+                                        <form method="post" action="tambah_opname.php">
                                             <div class="item-container">
                                                 <div class="form-group">
                                                     <label for="nama_item">Nama Item:</label>
                                                     <input class="form-control id_item" type="text" name="id_item" style="display: none;" />
+                                                    <input class="form-control jumlah_satuan" type="text" name="jumlah_satuan"  style="display: none;"/>
                                                     <input class="form-control nama_item" type="text" name="nama_item" placeholder="Nama Item" required />
                                                     <div class="result"></div>
                                                 </div>
@@ -163,13 +149,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         $.ajax({
                             type: "POST",
-                            url: "get_quantity.php",
+                            url: "get_opname.php",
                             data: {
                                 selectedItem: selectedItem
                             },
                             success: function(response) {
                                 var data = JSON.parse(response);
                                 itemContainer.find(".id_item").val(data.id_item);
+                                itemContainer.find(".jumlah_satuan").val(data.jumlah_satuan);
                             }
                         });
 

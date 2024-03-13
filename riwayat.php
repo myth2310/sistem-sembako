@@ -1,7 +1,6 @@
 <?php include('layout/head.php'); ?>
 
-<link href='https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
-<link href='https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css' rel='stylesheet' type='text/css'>
+
 
 <body>
     <div id="app">
