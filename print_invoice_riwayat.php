@@ -55,10 +55,6 @@ if (isset($_GET['id_transaksi'])) {
             $pdf->Cell(0, 10, 'No. Transaksi: ' . $row['no_transaksi'], 0, 1);
             $pdf->Cell(0, 10, 'Tanggal: ' . $row['tanggal'], 0, 1);
             $pdf->Cell(0, 10, 'Nama Pelanggan: ' . $row['nama_pelanggan'], 0, 1);
-            $pdf->Cell(0, 10, 'Total Harga: ' . $row['total_harga'], 0, 1);
-            $pdf->Cell(0, 10, 'Uang Diterima: ' . $row['uang_terima'], 0, 1);
-            $pdf->Cell(0, 10, 'Diskon: ' . $row['diskon'].'%', 0, 1);
-            $pdf->Cell(0, 10, 'Kembalian: ' . $row['kembalian'], 0, 1);
             $pdf->Cell(0, 10, 'Keterangan: ' . $row['keterangan'], 0, 1);
 
             // Output details from detail_transaksi to PDF
@@ -68,7 +64,7 @@ if (isset($_GET['id_transaksi'])) {
                 $pdf->Cell(30, 10, 'Item', 1);
                 $pdf->Cell(30, 10, 'Jenis Satuan', 1);
                 $pdf->Cell(40, 10, 'Jumlah Satuan', 1);
-                $pdf->Cell(40, 10, 'Harga Beli', 1);
+                $pdf->Cell(40, 10, 'Harga', 1);
                 $pdf->Cell(40, 10, 'Subtotal', 1);
                 $pdf->Ln(); // Move to the next line
 
@@ -77,11 +73,17 @@ if (isset($_GET['id_transaksi'])) {
                     $pdf->Cell(30, 10, $detailRow['nama_item'], 1);
                     $pdf->Cell(30, 10, $detailRow['jenis_satuan'], 1);
                     $pdf->Cell(40, 10, $detailRow['jumlah'], 1);
-                    $pdf->Cell(40, 10, $detailRow['harga_beli'], 1);
-                    $pdf->Cell(40, 10, $detailRow['total_per_satuan'], 1);
+                    $pdf->Cell(40, 10, 'Rp.'.number_format($detailRow['harga_jual'], 0, ',', '.'), 1);
+                    $pdf->Cell(40, 10, 'Rp.'.number_format($detailRow['total_per_satuan'], 0, ',', '.'), 1);
                     $pdf->Ln(); // Move to the next line
                 }
             }
+
+            $pdf->Cell(0, 10, 'Total Harga: ' .'Rp.'.number_format($row['total_harga'], 0, ',', '.'), 0, 1);
+            $pdf->Cell(0, 10, 'Diskon: ' . $row['diskon'].'%', 0, 1);
+            $pdf->Cell(0, 10, 'Bayar: ' .'Rp.'.number_format($row['uang_terima'], 0, ',', '.'), 0, 1);
+            $pdf->Cell(0, 10, 'Kembalian: ' .'Rp.'.number_format($row['kembalian'], 0, ',', '.'), 0, 1);
+            
 
             // Output the PDF to the browser
             $pdf->Output();
