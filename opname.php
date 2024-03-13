@@ -2,9 +2,10 @@
 include('koneksi/config.php');
 
 // Ambil data dari tabel opname
-$query_opname = "SELECT item.nama_item, opname.stok_opname, opname.deskripsi, opname.keterangan, opname.id_opname
+$query_opname = "SELECT item.nama_item, item.total_dibeli, opname.stok_opname, opname.deskripsi, opname.keterangan, opname.id_opname
                  FROM opname
                  INNER JOIN item ON opname.id_item = item.id_item";
+
 $result_opname = $koneksi->query($query_opname);
 
 ?>
@@ -43,6 +44,7 @@ $result_opname = $koneksi->query($query_opname);
                                                     <tr>
                                                         <th>No</th>
                                                         <th>Nama Item</th>
+                                                        <th>Jumlah</th>
                                                         <th>Stok Opname</th>
                                                         <th>Deskripsi</th>
                                                         <th>Keterangan</th>
@@ -57,6 +59,7 @@ $result_opname = $koneksi->query($query_opname);
                                                             echo "<tr>";
                                                             echo "<td>" . $no++ . "</td>";
                                                             echo "<td>" . $row_opname['nama_item'] . "</td>";
+                                                            echo "<td>" . $row_opname['total_dibeli'] . "</td>";
                                                             echo "<td>" . $row_opname['stok_opname'] . "</td>";
                                                             echo "<td>" . $row_opname['deskripsi'] . "</td>";
                                                             echo "<td><input type='text' name='keterangan_" . $row_opname['id_opname'] . "' value='" . $row_opname['keterangan'] . "'></td>";
