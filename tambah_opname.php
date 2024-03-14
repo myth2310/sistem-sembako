@@ -83,17 +83,12 @@ $username = $_SESSION['username'];
 
                                                 <div class="form-group">
                                                     <label for="jumlah_satuan">Stok Opname:</label>
-                                                    <div class="row">
-                                                        <div class="col-4">
                                                             <input class="form-control" id="nilai" value="0" min="0" type="number" name="stok_opname" required />
                                                         </div>
-                                                        <div class="col-6">
+                                                        <!-- <div class="col-6">
                                                             <button type="button" onclick="tambahNilai()" class="btn btn-danger">Tambah</button>
                                                             <button type="button" onclick="kurangNilai()" class="btn btn-success">Kurang</button>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
+                                                        </div> -->
                                             </div>
                                             <button type="submit" class="btn btn-primary">Cek Stok Opname</button>
                                         </form>
