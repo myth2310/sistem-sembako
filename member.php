@@ -105,22 +105,14 @@ $username = $_SESSION['username'];
 
             </div>
 
-            <script>
-                $(document).ready(function() {
-                    var empDataTable = $('#empTable').DataTable({
-                        dom: 'Blfrtip',
-                        buttons: [{
-                            extend: 'pdf',
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4] // Column index which needs to export
-                            }
-                        }, ]
 
-                    });
+            <?php include('layout/js.php'); ?>
 
-                });
-            </script>
 
+            <link href='https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
+            <link href='https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css' rel='stylesheet' type='text/css'>
+
+        
             <!-- jQuery Library -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -131,7 +123,37 @@ $username = $_SESSION['username'];
             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
             <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
-            <?php include('layout/js.php'); ?>
+
+            </head>
+
+
+            <!-- Script -->
+            <script>
+                $(document).ready(function() {
+                    var empDataTable = $('#empTable').DataTable({
+                        dom: 'Blfrtip',
+                        buttons: [{
+                                extend: 'copy',
+                            },
+                            {
+                                extend: 'pdf',
+                                exportOptions: {
+                                    columns: [0, 1] // Column index which needs to export
+                                }
+                            },
+                            {
+                                extend: 'csv',
+                            },
+                            {
+                                extend: 'excel',
+                            }
+                        ]
+
+                    });
+
+                });
+            </script>
+
 
 </body>
 

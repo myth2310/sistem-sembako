@@ -65,6 +65,18 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                                             </div>
                                         </div>
 
+                                        <form action="export_excel.php" method="POST">
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="month" class="form-control" id="bulanTahun" name="bulanTahun">
+                                                </div>
+                                                <div class="col">
+                                                    <button type="submit" class="btn btn-dark" name="export">Export Excel</button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+
                                         <div style="margin-bottom: 40px;">
                                             <p style="font-size: 20px;" class="font-weight-bold">Filter Transaksi</p>
                                             <form id="searchForm">
@@ -80,13 +92,13 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                                                             <option value="terlama">Terlama</option>
                                                             <option value="terbaru">Terbaru</option>
                                                         </select>
-
                                                     </div>
                                                     <div class="col">
                                                         <button type="button" class="btn btn-success" onclick="searchData()">Filter Data</button>
                                                     </div>
                                                 </div>
                                             </form>
+
                                             <hr>
                                         </div>
                                         <div class="table-responsive">
@@ -243,7 +255,8 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                         url: 'search_transaksi.php', // Ganti dengan nama file PHP yang akan memproses pencarian
                         data: {
                             namaPelanggan: namaPelanggan,
-                            bulanTahun,bulanTahun,
+                            bulanTahun,
+                            bulanTahun,
                             sorting: sorting
                         },
                         success: function(data) {

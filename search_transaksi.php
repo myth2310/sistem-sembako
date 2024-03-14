@@ -1,18 +1,22 @@
 <?php
 include('koneksi/config.php');
 
+// Pastikan elemen $_POST['bulanTahun'] terdefinisi sebelum mengaksesnya
+$bulanTahun = isset($_POST['bulanTahun']) ? $_POST['bulanTahun'] : '';
+
 // Ambil nilai pencarian dan sorting dari Ajax
 $namaPelanggan = $_POST['namaPelanggan'];
-$bulanTahun = $_POST['bulanTahun'];
 $sorting = $_POST['sorting'];
 
 // Pisahkan nilai bulan dan tahun dari input bulanTahun
-list($tahun, $bulan) = explode('-', $bulanTahun);
+if (!empty($bulanTahun)) {
+    list($tahun, $bulan) = explode('-', $bulanTahun);
+}
 
 // Query untuk mengambil data transaksi berdasarkan pencarian, bulan, tahun, dan sorting
 $query = "SELECT * FROM transaksi WHERE nama_pelanggan LIKE '%$namaPelanggan%' ";
 
-// Tambahkan kondisi untuk bulan dan tahun
+// Tambahkan kondisi untuk bulan dan tahun jika bulanTahun tidak kosong
 if (!empty($bulanTahun)) {
     $query .= "AND MONTH(tanggal) = $bulan AND YEAR(tanggal) = $tahun ";
 }
@@ -53,6 +57,4 @@ if ($result) {
 
 // Menutup koneksi database
 $koneksi->close();
-?>
-
 ?>
