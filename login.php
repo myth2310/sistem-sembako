@@ -51,11 +51,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form method="POST" action="login.php">
                 <div class="form-group">
                     <label for="username">Username:</label>
-                    <input type="text" class="form-control" name="username" required>
+                    <input type="text" class="form-control" name="username" placeholder="Username" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" class="form-control" name="password" required>
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>
