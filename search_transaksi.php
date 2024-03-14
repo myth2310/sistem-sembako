@@ -3,10 +3,21 @@ include('koneksi/config.php');
 
 // Ambil nilai pencarian dan sorting dari Ajax
 $namaPelanggan = $_POST['namaPelanggan'];
+$bulanTahun = $_POST['bulanTahun'];
 $sorting = $_POST['sorting'];
 
-// Query untuk mengambil data transaksi berdasarkan pencarian dan sorting
-$query = "SELECT * FROM transaksi WHERE nama_pelanggan LIKE '%$namaPelanggan%' ORDER BY tanggal ";
+// Pisahkan nilai bulan dan tahun dari input bulanTahun
+list($tahun, $bulan) = explode('-', $bulanTahun);
+
+// Query untuk mengambil data transaksi berdasarkan pencarian, bulan, tahun, dan sorting
+$query = "SELECT * FROM transaksi WHERE nama_pelanggan LIKE '%$namaPelanggan%' ";
+
+// Tambahkan kondisi untuk bulan dan tahun
+if (!empty($bulanTahun)) {
+    $query .= "AND MONTH(tanggal) = $bulan AND YEAR(tanggal) = $tahun ";
+}
+
+$query .= "ORDER BY tanggal ";
 
 if ($sorting == 'terlama') {
     $query .= "ASC";
@@ -42,4 +53,6 @@ if ($result) {
 
 // Menutup koneksi database
 $koneksi->close();
+?>
+
 ?>

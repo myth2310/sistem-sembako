@@ -1,7 +1,5 @@
 <?php include('layout/head.php'); ?>
 
-<?php include('layout/head.php'); ?>
-
 <?php
 session_start();
 
@@ -71,6 +69,9 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                                             <p style="font-size: 20px;" class="font-weight-bold">Filter Transaksi</p>
                                             <form id="searchForm">
                                                 <div class="row">
+                                                    <div class="col">
+                                                        <input type="month" class="form-control" id="bulanTahun" name="bulanTahun">
+                                                    </div>
                                                     <div class="col">
                                                         <input type="text" class="form-control" id="namaPelanggan" placeholder="Nama Pelanggan" name="namaPelanggan">
                                                     </div>
@@ -234,6 +235,7 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
             <script>
                 function searchData() {
                     var namaPelanggan = $('#namaPelanggan').val();
+                    var bulanTahun = $('#bulanTahun').val();
                     var sorting = $('#sorting').val();
 
                     $.ajax({
@@ -241,6 +243,7 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                         url: 'search_transaksi.php', // Ganti dengan nama file PHP yang akan memproses pencarian
                         data: {
                             namaPelanggan: namaPelanggan,
+                            bulanTahun,bulanTahun,
                             sorting: sorting
                         },
                         success: function(data) {
