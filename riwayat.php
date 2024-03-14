@@ -68,6 +68,7 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                                         <form action="export_excel.php" method="POST">
                                             <div class="row mb-3">
                                                 <div class="col-4">
+                                                    <!-- Type Month -->
                                                     <input type="month" class="form-control" id="bulanTahun" name="bulanTahun">
                                                 </div>
                                                 <div class="col">
@@ -82,6 +83,7 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                                             <form id="searchForm">
                                                 <div class="row">
                                                     <div class="col">
+                                                          <!-- Type Month -->
                                                         <input type="month" class="form-control" id="bulanTahun" name="bulanTahun">
                                                     </div>
                                                     <div class="col">
