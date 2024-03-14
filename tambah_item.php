@@ -1,6 +1,20 @@
 <?php include('koneksi/config.php'); ?>
 
 <?php
+session_start();
+
+// Periksa apakah pengguna sudah login
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Ambil username dari sesi
+$username = $_SESSION['username'];
+$role = $_SESSION['role']; 
+?>
+
+<?php
 // Jika form disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_item = $_POST['id_item'];

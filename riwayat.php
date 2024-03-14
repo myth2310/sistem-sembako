@@ -13,7 +13,7 @@ if (!isset($_SESSION['username'])) {
 
 // Ambil username dari sesi
 $username = $_SESSION['username'];
-$role = $_SESSION['role']; 
+$role = $_SESSION['role'];
 ?>
 
 <?php
@@ -59,10 +59,10 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-12">
-                                          
+
                                                 <div class="alert alert-success" role="alert">
-                                                <p style="font-size: 25px;" class="font-weight-bold">Pendapatan Perbulan (<?php echo date('F Y'); ?>)</p>
-                                                    <p style="font-size: 20px;" class="mt-2"><?php echo 'Rp.'.number_format($total_harga_bulan_ini, 0, ',', '.'); ?></p>
+                                                    <p style="font-size: 25px;" class="font-weight-bold">Pendapatan Perbulan (<?php echo date('F Y'); ?>)</p>
+                                                    <p style="font-size: 20px;" class="mt-2"><?php echo 'Rp.' . number_format($total_harga_bulan_ini, 0, ',', '.'); ?></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -118,16 +118,15 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                                                                 echo "<td>" . date('d F Y', strtotime($row['tanggal'])) . "</td>";
                                                                 echo "<td>" . $row['nama_pelanggan'] . "</td>";
                                                                 echo "<td>
-                                                                        <!-- Tombol aksi -->
-                                                                        <a class='btn btn-warning btn-sm px-4 mt-2' href='print_invoice_riwayat.php?id_transaksi=" . $row['id_transaksi'] . "'>Print</a>  
-                                                                       
-                                                                        if ($role === 'Admin') :
-                                                                            <a class='btn btn-danger btn-sm px-4 mt-2' href='hapus_transaksi.php?id_transaksi=" . $row['id_transaksi'] . "'>Hapus</a>
-                                                                        endif;                                                             
-                                                                      
-                                                                        <a class='btn btn-primary btn-sm px-4 mt-2' href='detail_transaksi.php?id_transaksi=" . $row['id_transaksi'] . "''>Detail</a>
-                                                                       
-                                                                      </td>";
+                                                                <!-- Tombol aksi -->
+                                                                <a class='btn btn-warning btn-sm px-4 mt-2' href='print_invoice_riwayat.php?id_transaksi=" . $row['id_transaksi'] . "'>Print</a>";
+
+                                                                if ($_SESSION['role'] === 'Admin') {
+                                                                    echo "<a class='btn btn-danger btn-sm px-4 mt-2' href='hapus_transaksi.php?id_transaksi=" . $row['id_transaksi'] . "'>Hapus</a>";
+                                                                }
+
+                                                                echo "<a class='btn btn-primary btn-sm px-4 mt-2' href='detail_transaksi.php?id_transaksi=" . $row['id_transaksi'] . "'>Detail</a>";
+                                                                echo "</td>";
                                                                 echo "</tr>";
                                                             }
                                                         } else {
