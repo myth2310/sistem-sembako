@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2024 at 04:12 PM
+-- Generation Time: Mar 15, 2024 at 03:04 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,7 +44,8 @@ INSERT INTO `detail_transaksi` (`id_detail_transaksi`, `id_transaksi`, `id_item`
 (30, 29, 6, 2, 100000),
 (31, 30, 6, 2, 100000),
 (32, 31, 6, 2, 140000),
-(33, 31, 7, 3, 30000);
+(33, 31, 7, 3, 30000),
+(34, 33, 9, 2, 20000);
 
 -- --------------------------------------------------------
 
@@ -71,7 +72,8 @@ CREATE TABLE `item` (
 
 INSERT INTO `item` (`id_item`, `kategori_id`, `nama_item`, `merk`, `jenis_satuan`, `jumlah_satuan`, `isi_satuan`, `harga_beli`, `harga_jual`, `total_dibeli`) VALUES
 (6, 6, 'bubur ayam', NULL, 'pack', 62, '50', 50000, 70000, 70),
-(7, 6, 'ciki', NULL, 'dus', 27, '50', 9000, 10000, 30);
+(7, 6, 'ciki', NULL, 'dus', 27, '50', 9000, 10000, 30),
+(9, 6, 'cake', NULL, 'pack', 10, '50', 7000, 10000, 12);
 
 -- --------------------------------------------------------
 
@@ -134,7 +136,8 @@ CREATE TABLE `opname` (
 
 INSERT INTO `opname` (`id_opname`, `id_item`, `stok_opname`, `balance`, `keterangan`, `tanggal`) VALUES
 (8, 1, 10, 'Deskripsi opname', 'Keterangan opname', '2024-03-13'),
-(23, 6, 9, 'Kurang 53', 'Tulis Keterangan', '2024-03-13');
+(23, 6, 9, 'Kurang 53', 'rusak', '2024-03-13'),
+(24, 9, 8, 'Kurang 2', 'hilang', '2024-03-15');
 
 -- --------------------------------------------------------
 
@@ -162,7 +165,9 @@ INSERT INTO `transaksi` (`id_transaksi`, `no_transaksi`, `tanggal`, `nama_pelang
 (28, 'TR96768963', '2024-03-13', 'adi', 90000, 10, 100000, 10000.00, 'dsfsdf'),
 (29, 'TR42776746', '2024-03-13', 'afddfsf', 100000, 0, 1000000, 900000.00, 'dfsfsvvs'),
 (30, 'TR23227232', '2024-03-13', 'adi', 90000, 10, 100000, 10000.00, 'dfsfsdfsf'),
-(31, 'TR13622229', '2024-03-13', 'adi', 153000, 10, 160000, 7000.00, 'dsdfsd');
+(31, 'TR13622229', '2024-03-13', 'adi', 153000, 10, 160000, 7000.00, 'dsdfsd'),
+(32, 'fg3424', '2024-02-15', 'dfssef', 5000000, 0, 6000000, 1000000.00, 'fgdgd'),
+(33, 'TR98769259', '2024-03-15', 'adi', 18000, 10, 20000, 2000.00, 'asdadasd');
 
 -- --------------------------------------------------------
 
@@ -241,19 +246,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id_detail_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `member`
@@ -265,13 +270,13 @@ ALTER TABLE `member`
 -- AUTO_INCREMENT for table `opname`
 --
 ALTER TABLE `opname`
-  MODIFY `id_opname` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_opname` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `users`
