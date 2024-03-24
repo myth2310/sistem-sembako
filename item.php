@@ -51,7 +51,9 @@ $username = $_SESSION['username'];
                                                         <th>Jumlah</th>
                                                         <th>Isi Satuan</th>
                                                         <th>Harga Beli</th>
-                                                        <th>Harga Jual</th>
+                                                        <th>Harga Jual 1</th>
+                                                        <th>Harga Jual 2</th>
+                                                        <th>Harga Jual 3</th>
                                                         <th>Aksi</th>
                                                     </tr>
                                                 </thead>
@@ -75,6 +77,8 @@ $username = $_SESSION['username'];
                                                             echo "<td>" . $row['isi_satuan'] . "</td>";
                                                             echo "<td class='harga_beli'>" . $row['harga_beli'] . "</td>";
                                                             echo "<td class='harga_jual'>" . $row['harga_jual'] . "</td>";
+                                                            echo "<td class='harga_jual'>" . $row['harga_jual2'] . "</td>";
+                                                            echo "<td class='harga_jual'>" . $row['harga_jual3'] . "</td>";
                                                             echo "<td>";
                                                             echo "<a href='edit_item.php?id_item=" . $row['id_item'] . "' class='btn btn-warning btn-sm'>Perbarui Data</a>";
                                                             echo "<a href='hapus_item.php?id_item=" . $row['id_item'] . "' class='btn btn-danger btn-sm'>Hapus</a>";
@@ -192,7 +196,7 @@ $username = $_SESSION['username'];
                         buttons: [{
                             extend: 'pdf',
                             exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6, 7] // Column index which needs to export
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // Column index which needs to export
                             }
                         }, ]
 

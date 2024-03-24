@@ -72,7 +72,7 @@ $koneksi->close();
                                                 <p>: <?php echo date('d F Y', strtotime($row['tanggal'])); ?></p>
                                             </div>
                                             <div class="col-2">
-                                                Keterangan
+                                                Sales
                                             </div>
                                             <div class="col-5">
                                                 <p>: <?php echo $row['keterangan']; ?></p>
@@ -109,7 +109,7 @@ $koneksi->close();
                                                                 echo "<td>" . $data['nama_item'] . "</td>";
                                                                 echo "<td>" . $data['jenis_satuan'] . "</td>";
                                                                 echo "<td>" . $data['jumlah'] . "</td>";
-                                                                echo "<td> Rp." . number_format($data['harga_beli'], 0, ',', '.') . "</td>";
+                                                                echo "<td> Rp." . number_format($data['harga_jual'], 0, ',', '.') . "</td>";
                                                                 echo "<td> Rp." .  number_format($data['total_per_satuan'], 0, ',', '.') . "</td>";
 
 
@@ -128,14 +128,14 @@ $koneksi->close();
                                                 </tbody>
                                             </table>
                                             <div class="mb-4 px-4">
-                                                <div class="row">
+                                                <!-- <div class="row">
                                                     <div class="co-6">
                                                         <p><strong>Diskon</strong></p>
                                                     </div>
                                                     <div class="col">
                                                         <p class="font-weight-bold"> : <?php echo number_format($row['diskon'], 0, ',', '.'); ?> % </p>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <div class="row">
                                                     <div class="co-6">
                                                         <p><strong>Harga Total</strong></p>
@@ -170,7 +170,7 @@ $koneksi->close();
                                         </div>
 
 
-                                       
+
                                     </div>
                                 </div>
                             </div>

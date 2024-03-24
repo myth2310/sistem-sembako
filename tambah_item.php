@@ -11,7 +11,7 @@ if (!isset($_SESSION['username'])) {
 
 // Ambil username dari sesi
 $username = $_SESSION['username'];
-$role = $_SESSION['role']; 
+$role = $_SESSION['role'];
 ?>
 
 <?php
@@ -25,9 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $isi_satuan = $_POST['isi_satuan'];
     $harga_beli = intval(unformatRupiah($_POST['harga_beli'])); // Mengubah nilai menjadi integer
     $harga_jual = intval(unformatRupiah($_POST['harga_jual'])); // Mengubah nilai menjadi integer
+    $harga_jual2 = intval(unformatRupiah($_POST['harga_jual2'])); // Mengubah nilai menjadi integer
+    $harga_jual3 = intval(unformatRupiah($_POST['harga_jual3'])); // Mengubah nilai menjadi integer
 
-    $query = "INSERT INTO item (id_item, kategori_id, nama_item, jenis_satuan, jumlah_satuan, isi_satuan, harga_beli, harga_jual, total_dibeli) 
-          VALUES ('$id_item', '$kategori_id', '$nama_item', '$jenis_satuan', '$jumlah_satuan', '$isi_satuan', '$harga_beli', '$harga_jual', '$jumlah_satuan')";
+    $query = "INSERT INTO item (id_item, kategori_id, nama_item, jenis_satuan, jumlah_satuan, isi_satuan, harga_beli, harga_jual, harga_jual2, harga_jual3, total_dibeli) 
+          VALUES ('$id_item', '$kategori_id', '$nama_item', '$jenis_satuan', '$jumlah_satuan', '$isi_satuan', '$harga_beli', '$harga_jual', '$harga_jual2', '$harga_jual3', '$jumlah_satuan')";
     if ($koneksi->query($query) === TRUE) {
         header("Location: item.php");
         exit();
@@ -109,8 +111,16 @@ function unformatRupiah($str)
                                                 <input type="text" class="form-control" id="harga_beli" name="harga_beli" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="harga_jual">Harga Jual:</label>
+                                                <label for="harga_jual">Harga Jual 1:</label>
                                                 <input type="text" class="form-control" id="harga_jual" name="harga_jual" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="harga_jual2">Harga Jual 2:</label>
+                                                <input type="text" class="form-control" id="harga_jual2" name="harga_jual2" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="harga_jual3">Harga Jual 3:</label>
+                                                <input type="text" class="form-control" id="harga_jual3" name="harga_jual3" required>
                                             </div>
                                             <!-- Tambahkan bagian lain sesuai kebutuhan -->
                                             <button type="submit" class="btn btn-primary">Simpan</button>

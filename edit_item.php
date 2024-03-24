@@ -10,13 +10,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $isi_satuan = $_POST['isi_satuan'];
     $harga_beli = intval(unformatRupiah($_POST['harga_beli'])); // Mengubah nilai menjadi integer
     $harga_jual = intval(unformatRupiah($_POST['harga_jual'])); // Mengubah nilai menjadi integer
+    $harga_jual2 = intval(unformatRupiah($_POST['harga_jual2'])); // Mengubah nilai menjadi integer
+    $harga_jual3 = intval(unformatRupiah($_POST['harga_jual3'])); // Mengubah nilai menjadi integer
 
     // Periksa apakah kategori_id yang dikirimkan ada dalam tabel kategori
     $check_kategori = "SELECT * FROM kategori WHERE id='$kategori_id'";
     $result_check_kategori = $koneksi->query($check_kategori);
     if ($result_check_kategori->num_rows > 0) {
         // Jika kategori_id valid, jalankan pernyataan SQL untuk memperbarui data
-        $query = "UPDATE item SET kategori_id='$kategori_id', nama_item='$nama_item', jenis_satuan='$jenis_satuan', jumlah_satuan='$jumlah_satuan', isi_satuan='$isi_satuan', harga_beli='$harga_beli', harga_jual='$harga_jual' WHERE id_item='$id_item'";
+        $query = "UPDATE item SET kategori_id='$kategori_id', nama_item='$nama_item', jenis_satuan='$jenis_satuan', jumlah_satuan='$jumlah_satuan', isi_satuan='$isi_satuan', harga_beli='$harga_beli', harga_jual='$harga_jual', harga_jual2='$harga_jual2', harga_jual3='$harga_jual3' WHERE id_item='$id_item'";
         if ($koneksi->query($query) === TRUE) {
             header("Location: item.php");
             exit();
@@ -128,6 +130,14 @@ $username = $_SESSION['username'];
                                             <div class="form-group">
                                                 <label for="harga_jual">Harga Jual:</label>
                                                 <input type="text" class="form-control" id="harga_jual" name="harga_jual" value="Rp. <?php echo $row['harga_jual']; ?>" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="harga_jual2">Harga Jual 2:</label>
+                                                <input type="text" class="form-control" id="harga_jual2" name="harga_jual2" value="Rp. <?php echo $row['harga_jual2']; ?>" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="harga_jual3">Harga Jual 3:</label>
+                                                <input type="text" class="form-control" id="harga_jual3" name="harga_jual3" value="Rp. <?php echo $row['harga_jual3']; ?>" required>
                                             </div>
 
                                             <button type="submit" class="btn btn-primary">Simpan</button>

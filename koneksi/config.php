@@ -2,8 +2,8 @@
 // config.php
 
 $host = "localhost"; // Host database
-$username = "root"; // Username database
-$password = ""; // Password database
+$username = "123"; // Username database
+$password = "123"; // Password database
 $database = "sembako"; // Nama database
 
 // Membuat koneksi ke database

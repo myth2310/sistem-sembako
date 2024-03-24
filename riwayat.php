@@ -83,7 +83,7 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                                             <form id="searchForm">
                                                 <div class="row">
                                                     <div class="col">
-                                                          <!-- Type Month -->
+                                                        <!-- Type Month -->
                                                         <input type="month" class="form-control" id="bulanTahun" name="bulanTahun">
                                                     </div>
                                                     <div class="col">
@@ -202,7 +202,7 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
             </script>
 
 
-            <script>
+            <!-- <script>
                 $(document).ready(function() {
                     var empDataTable = $('#empTable').DataTable({
                         dom: 'Blfrtip',
@@ -233,7 +233,7 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                     });
 
                 });
-            </script>
+            </script> -->
 
             <!-- jQuery Library -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
