@@ -90,6 +90,7 @@ $username = $_SESSION['username'];
                                     </div>
                                     <div class="card-body">
                                         <a href="tambah_opname.php" class="btn btn-primary mb-3">Tambah</a>
+                                        <a href="#" class="btn btn-warning mb-3" id="printButton">Print</a>
                                         <div class="table-responsive">
                                             <!-- Tabel Stock Opname -->
                                             <table id="empTable" class="table mt-3">
@@ -113,8 +114,8 @@ $username = $_SESSION['username'];
                                                             echo "<td>" . $no++ . "</td>";
 
                                                             // Mengubah format tanggal dari "tahun-bulan-hari" menjadi "hari-bulan-tahun"
-                                                           
-                                                            echo "<td>" . date('d F Y', strtotime($row_opname['tanggal'])). "</td>"; // Menampilkan tanggal dengan format "hari-bulan-tahun"
+
+                                                            echo "<td>" . date('d F Y', strtotime($row_opname['tanggal'])) . "</td>"; // Menampilkan tanggal dengan format "hari-bulan-tahun"
 
                                                             echo "<td>" . $row_opname['nama_item'] . "</td>";
                                                             echo "<td>" . $row_opname['stok_opname'] . "</td>";
@@ -147,6 +148,13 @@ $username = $_SESSION['username'];
             <?php include('layout/js.php'); ?>
         </div>
     </div>
+    <script>
+        // Fungsi untuk menjalankan print_opname.php saat tombol cetak diklik
+        document.getElementById('printButton').addEventListener('click', function() {
+            window.location.href = 'print_opname.php';
+        });
+    </script>
+
     <script>
         // Tangkap klik tombol update
         document.addEventListener('click', function(e) {
