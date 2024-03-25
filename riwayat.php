@@ -68,7 +68,11 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                                         <form action="export_excel.php" method="POST">
                                             <div class="row mb-3">
                                                 <div class="col-3">
-                                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Pelanggan">
+                                                    <div class="pelanggan-container">
+                                                        <input type="text" class="form-control nama" id="nama" name="nama" placeholder="Nama Pelanggan">
+                                                        <div class="result_pelanggan"></div>
+                                                    </div>
+
                                                 </div>
                                                 <div class="col-3">
                                                     <input type="month" class="form-control" id="bulanTahunMulai" name="bulanTahunMulai" placeholder="Mulai Bulan Tahun" required>
@@ -213,8 +217,7 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                     var empDataTable = $('#empTable').DataTable({
                         dom: 'Blfrtip',
                         searching: false,
-                        buttons: [
-                        ]
+                        buttons: []
 
                     });
 
@@ -252,6 +255,54 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                         }
                     });
                 }
+            </script>
+
+            <script>
+                $(document).ready(function() {
+                    function handleItemSearch(inputElement) {
+                        var searchPelanggan = inputElement.val();
+                        var resultPelanggan = inputElement.parent().find(".result_pelanggan");
+
+                        if (searchPelanggan !== "") {
+                            $.ajax({
+                                type: "POST",
+                                url: "search_pelanggan.php",
+                                data: {
+                                    searchPelanggan: searchPelanggan
+                                },
+                                success: function(data) {
+                                    resultPelanggan.html(data);
+                                }
+                            });
+                        } else {
+                            resultPelanggan.empty();
+                        }
+                    }
+
+                    $(document).on("input", ".nama", function() {
+                        handleItemSearch($(this));
+                    });
+
+                    $(document).on("click", ".result_pelanggan li", function() {
+                        var selectedPelanggan = $(this).text();
+                        var pelangganContainer = $(this).closest(".pelanggan-container");
+                        pelangganContainer.find(".nama").val(selectedPelanggan);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "get_pelanggan.php",
+                            data: {
+                                selectedPelanggan: selectedPelanggan
+                            },
+                            success: function(response) {
+                                var data = JSON.parse(response);
+                                pelangganContainer.find(".nama").val(data.nama);
+                            }
+                        });
+
+                        pelangganContainer.find(".result_pelanggan").empty(); // Mengganti itemContainer menjadi pelangganContainer
+                    });
+                });
             </script>
 
 </body>
