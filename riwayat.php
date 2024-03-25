@@ -67,15 +67,21 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
 
                                         <form action="export_excel.php" method="POST">
                                             <div class="row mb-3">
-                                                <div class="col-4">
-                                                    <!-- Type Month -->
-                                                    <input type="month" class="form-control" id="bulanTahun" name="bulanTahun">
+                                                <div class="col-3">
+                                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Pelanggan">
+                                                </div>
+                                                <div class="col-3">
+                                                    <input type="month" class="form-control" id="bulanTahunMulai" name="bulanTahunMulai" placeholder="Mulai Bulan Tahun" required>
+                                                </div>
+                                                <div class="col-3">
+                                                    <input type="month" class="form-control" id="bulanTahunAkhir" name="bulanTahunAkhir" placeholder="Akhir Bulan Tahun" required>
                                                 </div>
                                                 <div class="col">
                                                     <button type="submit" class="btn btn-dark" name="export">Export Excel</button>
                                                 </div>
                                             </div>
                                         </form>
+
 
 
                                         <div style="margin-bottom: 40px;">
@@ -202,38 +208,18 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
             </script>
 
 
-            <!-- <script>
+            <script>
                 $(document).ready(function() {
                     var empDataTable = $('#empTable').DataTable({
                         dom: 'Blfrtip',
                         searching: false,
-                        buttons: [{
-                                extend: 'copy',
-                            },
-                            {
-                                extend: 'pdf',
-                                exportOptions: {
-                                    columns: [0, 1, 2] // Column index which needs to export
-                                }
-                            },
-                            {
-                                extend: 'csv',
-                                exportOptions: {
-                                    columns: [0, 1, 2] // Column index which needs to export
-                                }
-                            },
-                            {
-                                extend: 'excel',
-                                exportOptions: {
-                                    columns: [0, 1, 2] // Column index which needs to export
-                                }
-                            }
+                        buttons: [
                         ]
 
                     });
 
                 });
-            </script> -->
+            </script>
 
             <!-- jQuery Library -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

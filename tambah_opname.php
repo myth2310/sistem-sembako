@@ -104,30 +104,8 @@ $username = $_SESSION['username'];
 
             <?php include('layout/js.php'); ?>
 
-
-            <script>
-  function tambahNilai() {
-    var nilaiInput = document.getElementById("nilai");
-    var nilai = parseInt(nilaiInput.value, 10);
-    nilai += 1;
-    nilaiInput.value = nilai;
-  }
-
-  function kurangNilai() {
-    var nilaiInput = document.getElementById("nilai");
-    var nilai = parseInt(nilaiInput.value, 10);
-    if (nilai > 0) {
-      nilai -= 1;
-      nilaiInput.value = nilai;
-    }
-  }
-</script>
-
-
-
             <script>
                 $(document).ready(function() {
-                    // Function to handle item search
                     function handleItemSearch(inputElement) {
                         var searchTerm = inputElement.val();
                         var resultContainer = inputElement.parent().find(".result");
