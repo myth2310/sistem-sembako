@@ -65,6 +65,7 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                                             </div>
                                         </div>
 
+                                            <p style="font-size: 20px;" class="font-weight-bold">Cetak Berdasarkan </p>
                                         <form action="export_excel.php" method="POST">
                                             <div class="row mb-3">
                                                 <div class="col-3">
@@ -81,7 +82,7 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                                                     <input type="month" class="form-control" id="bulanTahunAkhir" name="bulanTahunAkhir" placeholder="Akhir Bulan Tahun" required>
                                                 </div>
                                                 <div class="col">
-                                                    <button type="submit" class="btn btn-dark" name="export">Export Excel</button>
+                                                    <button type="submit" class="btn btn-success" name="export">Export Excel</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -89,7 +90,7 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
 
 
                                         <div style="margin-bottom: 40px;">
-                                            <p style="font-size: 20px;" class="font-weight-bold">Filter Transaksi</p>
+                                            <p style="font-size: 20px;" class="font-weight-bold">Tampilkan Berdasarkan </p>
                                             <form id="searchForm">
                                                 <div class="row">
                                                     <div class="col">
@@ -106,7 +107,7 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                                                         </select>
                                                     </div>
                                                     <div class="col">
-                                                        <button type="button" class="btn btn-success" onclick="searchData()">Filter Data</button>
+                                                        <button type="button" class="btn btn-primary" onclick="searchData()">Filter Data</button>
                                                     </div>
                                                 </div>
                                             </form>
