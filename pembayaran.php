@@ -85,7 +85,7 @@ $result = mysqli_query($koneksi, $query);
                                   <div class="result_pelanggan"></div>
                                 </div>
                                 <div class="col">
-                                  <a href="tambah_member.php" class="btn btn-warning p-2">Tambah Pelanggan</a>
+                                  <a href="tambah_pelanggan.php" class="btn btn-warning p-2">Tambah Pelanggan</a>
                                 </div>
                               </div>
 
