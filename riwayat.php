@@ -93,11 +93,11 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                                             <form id="searchForm">
                                                 <div class="row">
                                                     <div class="col">
-                                                        <!-- Type Month -->
-                                                        <input type="month" class="form-control" id="bulanTahun" name="bulanTahun">
+                                                        <input type="text" class="form-control" id="namaPelanggan" placeholder="Nama Pelanggan" name="namaPelanggan">
                                                     </div>
                                                     <div class="col">
-                                                        <input type="text" class="form-control" id="namaPelanggan" placeholder="Nama Pelanggan" name="namaPelanggan">
+                                                        <!-- Type Month -->
+                                                        <input type="month" class="form-control" id="bulanTahun" name="bulanTahun">
                                                     </div>
                                                     <div class="col">
                                                         <select id="sorting" class="form-control" name="sorting">

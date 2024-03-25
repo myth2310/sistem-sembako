@@ -18,7 +18,7 @@ if (isset($_POST['searchPelanggan'])) {
             }
             echo '</ul>';
         } else {
-            echo 'Item tidak ditemukan';
+            echo 'Pelanggan tidak ditemukan';
         }
     } else {
         echo 'Error: ' . mysqli_error($koneksi);

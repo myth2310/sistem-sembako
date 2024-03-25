@@ -81,7 +81,7 @@ $result = mysqli_query($koneksi, $query);
                             <div class="pelanggan-container">
                               <div class="row">
                                 <div class="col-6">
-                                  <input class="form-control nama" type="text" name="nama" placeholder="Nama Item" required />
+                                  <input class="form-control nama" type="text" name="nama" placeholder="Nama Pelanggan" required />
                                   <div class="result_pelanggan"></div>
                                 </div>
                                 <div class="col">
