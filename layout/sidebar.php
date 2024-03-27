@@ -21,6 +21,9 @@
     <?php if ($_SESSION['role'] === 'Admin') : ?>
       <li><a class="nav-link" href="item.php"><i class="fas fa-wallet"></i><span>Item</span></a></li>
     <?php endif; ?>
+    <?php if ($_SESSION['role'] === 'Admin') : ?>
+      <li><a class="nav-link" href="item_terjual.php"><i class="fas fa-wallet"></i><span>Item Terjual</span></a></li>
+    <?php endif; ?>
 
     <?php if ($_SESSION['role'] === 'Admin') : ?>
       <li class="menu-header">Master Opname</li>

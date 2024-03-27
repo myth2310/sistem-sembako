@@ -88,10 +88,7 @@ $result = mysqli_query($koneksi, $query);
                                   <a href="tambah_pelanggan.php" class="btn btn-warning p-2">Tambah Pelanggan</a>
                                 </div>
                               </div>
-
                             </div>
-
-
                           </div>
                         </div>
                         <!-- <div class="col-md-4 offset-md-8">
@@ -102,15 +99,32 @@ $result = mysqli_query($koneksi, $query);
                         </div> -->
                         <div class="col-md-4 offset-md-8">
                           <div class="form-group">
-                            <label for="uang_diterima" class="text-dark">Bayar (Rp.)<span class='red'> *</span></label>
+                            <label for="tipe_pembayaran" class="text-dark">Tipe Pembayaran<span class='red'> *</span></label>
+                            <select class="form-control" name="tipe_pembayaran" id="tipe_pembayaran" required>
+                              <option value="">Metode Pembayaran</option>
+                              <option value="Cash">Cash</option>
+                              <option value="Debit">Debit</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-4 offset-md-8">
+                          <div class="form-group">
+                            <label for="uang_diterima" id="label_uang_diterima" class="text-dark">Bayar (Rp.)<span class='red'> *</span></label>
                             <input class="form-control" type="text" name="uang_diterima" id="uang_diterima" required />
                           </div>
                         </div>
 
                         <div class="col-md-4 offset-md-8">
                           <div class="form-group">
-                            <label for="kembalian" class="text-dark">Kembalian (Rp.)<span class='red'> *</span></label>
+                            <label for="kembalian" id="label_kembalian" class="text-dark">Kembalian (Rp.)<span class='red'> *</span></label>
                             <input class="form-control" type="text" name="kembalian" id="kembalian" readonly />
+                          </div>
+                        </div>
+
+                        <div class="col-md-4 offset-md-8">
+                          <div class="form-group">
+                            <label for="kurangan" id="label_kurangan" class="text-dark">Kurangan (Rp.)<span class='red'> *</span></label>
+                            <input class="form-control" type="text" name="kurangan" id="kurangan" readonly />
                           </div>
                         </div>
                         <!-- Keterangan -->
@@ -253,46 +267,92 @@ $result = mysqli_query($koneksi, $query);
 
       // Function to recalculate total harga_jual
       function recalculateTotal() {
-        var totalHargaJual = 0;
+          var totalHargaJual = 0;
 
-        $(".item-container").each(function() {
-          var jumlahSatuan = parseFloat($(this).find(".jumlah_satuan").val()) || 0;
-          var hargaJual = parseFloat($(this).find(".harga_jual").val()) || 0;
+          $(".item-container").each(function() {
+              var jumlahSatuan = parseFloat($(this).find(".jumlah_satuan").val()) || 0;
+              var hargaJual = parseFloat($(this).find(".harga_jual").val()) || 0;
 
-          var totalPerSatuan = jumlahSatuan * hargaJual;
-          totalHargaJual += totalPerSatuan;
+              var totalPerSatuan = jumlahSatuan * hargaJual;
+              totalHargaJual += totalPerSatuan;
 
-          // Update the total per/satuan field
-          $(this).find(".total_per_satuan").val(totalPerSatuan.toFixed());
-        });
+              // Update the total per/satuan field
+              $(this).find(".total_per_satuan").val(totalPerSatuan.toFixed());
+          });
 
-        var diskon = parseFloat($("#diskon").val()) || 0;
-        var diskonAmount = (diskon / 100) * totalHargaJual;
-        var totalAfterDiskon = totalHargaJual - diskonAmount;
+          var diskon = parseFloat($("#diskon").val()) || 0;
+          var diskonAmount = (diskon / 100) * totalHargaJual;
+          var totalAfterDiskon = totalHargaJual - diskonAmount;
 
-        // Format total harga before setting its value
-        $("#totalHargaInput").val(formatRupiah(totalAfterDiskon));
+          // Format total harga before setting its value
+          $("#totalHargaInput").val(formatRupiah(totalAfterDiskon));
 
-        var uangDiterima = parseFloat($("#uang_diterima").val()) || 0;
+          var uangDiterima = parseFloat($("#uang_diterima").val()) || 0;
 
-        // Check if uangDiterima is not NaN and not 0
-        if (!isNaN(uangDiterima) && uangDiterima !== 0) {
-          // Calculate kembalian
-          var kembalian = uangDiterima - totalAfterDiskon;
+          // Check if uangDiterima is not NaN and not 0
+          if (!isNaN(uangDiterima) && uangDiterima !== 0) {
+              // Calculate kembalian
+              var kembalian = uangDiterima - totalAfterDiskon;
 
-          // Check if kembalian is negative
-          if (kembalian < 0) {
-            // Display an error message
-            $("#kembalian").val("Pembayaran kurang!");
+              // Check if kembalian is negative
+              if (kembalian < 0) {
+                  // Display the amount to be paid
+                  var kurangBayar = -kembalian; // Ambil nilai positif dari kembalian
+                  $("#kembalian").val("-"); // Tampilkan kurang bayar
+
+                  // Simpan nilai kurang bayar ke dalam input field
+                  $("#kurangan").val(formatRupiah(kurangBayar));
+              } else {
+                  // Format kembalian before setting its value
+                  $("#kembalian").val(formatRupiah(kembalian));
+
+                  // Set nilai kurang bayar ke 0 dan kosongkan input field
+                  $("#kurangan").val("");
+              }
           } else {
-            // Format kembalian before setting its value
-            $("#kembalian").val(formatRupiah(kembalian));
+              // Set kembalian to empty if uangDiterima is not entered
+              $("#kembalian").val("");
           }
-        } else {
-          // Set kembalian to empty if uangDiterima is not entered
-          $("#kembalian").val("");
-        }
       }
+
+      $("#kembalian").hide();
+      $("#kurangan").hide();
+      $("#label_kembalian").hide(); // Sembunyikan label "Kembalian (Rp.)"
+      $("#label_kurangan").hide(); 
+      $("#uang_diterima").hide(); 
+      $("#label_uang_diterima").hide(); 
+      // Event handler for change on tipe_pembayaran
+      $("#tipe_pembayaran").change(function() {
+          var selectedPaymentType = $(this).val();
+
+          // Jika memilih Cash, tampilkan field kembalian dan sembunyikan field kurangan
+          if (selectedPaymentType === "Cash") {
+              $("#kembalian").show();
+              $("#kurangan").hide();
+              $("#label_kembalian").show(); 
+              $("#label_kurangan").hide(); 
+              $("#uang_diterima").show(); 
+              $("#label_uang_diterima").show(); 
+          } 
+          // Jika memilih Debit, sembunyikan field kembalian dan kurangi labelnya
+          else if (selectedPaymentType === "Debit") {
+              $("#kembalian").hide();
+              $("#kurangan").show();
+              $("#label_kurangan").show(); 
+              $("#label_kembalian").hide(); 
+              $("#uang_diterima").show(); 
+              $("#label_uang_diterima").show(); 
+          }
+          // Jika belum memilih, sembunyikan keduanya
+          else {
+              $("#kembalian").hide();
+              $("#kurangan").hide();
+              $("#label_kembalian").hide(); // Sembunyikan label "Kembalian (Rp.)"
+              $("#label_kurangan").hide(); 
+              $("#uang_diterima").hide(); 
+              $("#label_uang_diterima").hide(); 
+          }
+      });
 
       // Function to format number to Indonesian currency format
       function formatRupiah(angka) {

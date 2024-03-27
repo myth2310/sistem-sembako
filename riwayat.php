@@ -65,7 +65,29 @@ $total_harga_bulan_ini = $row_total_harga['total_harga'];
                                             </div>
                                         </div>
 
-                                            <p style="font-size: 20px;" class="font-weight-bold">Cetak Berdasarkan </p>
+                                        <p style="font-size: 20px;" class="font-weight-bold">Cetak Berdasarkan Sales </p>
+                                        <form action="export_excel_sales.php" method="POST">
+                                            <div class="row mb-3">
+                                                <div class="col-3">
+                                                    <div class="pelanggan-container">
+                                                        <input type="text" class="form-control nama" id="namasales" name="namasales" placeholder="Nama Sales">
+                                                        <div class="result_pelanggan"></div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-3">
+                                                    <input type="month" class="form-control" id="bulanTahunMulai" name="bulanTahunMulai" placeholder="Mulai Bulan Tahun" required>
+                                                </div>
+                                                <div class="col-3">
+                                                    <input type="month" class="form-control" id="bulanTahunAkhir" name="bulanTahunAkhir" placeholder="Akhir Bulan Tahun" required>
+                                                </div>
+                                                <div class="col">
+                                                    <button type="submit" class="btn btn-success" name="export">Export Excel</button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <p style="font-size: 20px;" class="font-weight-bold">Cetak Berdasarkan Nama Pelanggan </p>
                                         <form action="export_excel.php" method="POST">
                                             <div class="row mb-3">
                                                 <div class="col-3">
