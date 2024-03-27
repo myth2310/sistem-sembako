@@ -31,32 +31,36 @@ $username = $_SESSION['username'];
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12">
 
-                                <!-- Tabel Items -->
+                                <!-- Tabel Detail Penjualan -->
                                 <div class="card mt-4">
                                     <div class="card-header">
-                                        <h4>Item Terjual</h4>
+                                        <h4>Detail Penjualan Item</h4>
                                     </div>
                                     <div class="card-body">
-                                        <a href="tambah_item.php" class="btn btn-primary mb-3">Tambah Item</a>
                                         <div class="table-responsive">
                                             <table id="empTable" class="table mt-4">
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
-                                                        <th>Kategori</th>
-                                                        <th>Nama Item</th>
-                                                        <th>Total Terjual</th>
+                                                        <th>Nama Pelanggan</th>
+                                                        <th>Total Item Dibeli</th>
                                                         <th>Aksi</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
                                                     include('koneksi/config.php');
-                                                    $sql = "SELECT item.*, kategori.kategori, SUM(detail_transaksi.jumlah_satuan) AS jumlah_terjual
-                                                            FROM item 
-                                                            INNER JOIN kategori ON item.kategori_id = kategori.id
-                                                            LEFT JOIN detail_transaksi ON item.id_item = detail_transaksi.id_item
-                                                            GROUP BY item.id_item";
+                                                    $sql = "SELECT 
+                                                                transaksi.nama_pelanggan,
+                                                                SUM(detail_transaksi.jumlah_satuan) AS total_item
+                                                            FROM 
+                                                                transaksi
+                                                            INNER JOIN 
+                                                                detail_transaksi ON transaksi.id_transaksi = detail_transaksi.id_transaksi
+                                                            WHERE 
+                                                                transaksi.nama_pelanggan IS NOT NULL
+                                                            GROUP BY 
+                                                                transaksi.nama_pelanggan";
                                                     $result = $koneksi->query($sql);
 
                                                     if ($result->num_rows > 0) {
@@ -64,15 +68,13 @@ $username = $_SESSION['username'];
                                                         while ($row = $result->fetch_assoc()) {
                                                             echo "<tr>";
                                                             echo "<td>" . $no++ . "</td>";
-                                                            echo "<td>" . $row['kategori'] . "</td>"; // Menggunakan kolom 'kategori' dari tabel kategori
-                                                            echo "<td>" . $row['nama_item'] . "</td>";
-                                                            echo "<td>" . $row['jumlah_terjual'] . "</td>"; // Menampilkan jumlah item terjual
-                                                            echo "<td><a href='detail_item_terjual.php?id_item=" . $row['id_item'] . "' class='btn btn-warning btn-sm'>Detail</a></td>";
-
+                                                            echo "<td>" . $row['nama_pelanggan'] . "</td>";
+                                                            echo "<td>" . $row['total_item'] . "</td>";
+                                                            echo "<td><a href='detail_item_terjual.php?nama_pelanggan=" . $row['nama_pelanggan'] . "' class='btn btn-warning btn-sm'>Detail</a></td>";
                                                             echo "</tr>";
                                                         }
                                                     } else {
-                                                        echo "<tr><td colspan='11'>Tidak ada data</td></tr>";
+                                                        echo "<tr><td colspan='4'>Tidak ada data</td></tr>";
                                                     }
                                                     $koneksi->close();
                                                     ?>
@@ -82,7 +84,7 @@ $username = $_SESSION['username'];
                                         </div>
                                     </div>
                                 </div>
-                                <!-- End Tabel Items -->
+                                <!-- End Tabel Detail Penjualan -->
 
                             </div>
                         </div>

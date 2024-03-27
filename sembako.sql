@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2024 at 04:41 AM
+-- Generation Time: Mar 27, 2024 at 05:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,27 +40,9 @@ CREATE TABLE `detail_transaksi` (
 --
 
 INSERT INTO `detail_transaksi` (`id_detail_transaksi`, `id_transaksi`, `id_item`, `jumlah_satuan`, `total_per_satuan`) VALUES
-(31, 30, 6, 2, 100000),
-(32, 31, 6, 2, 140000),
-(33, 31, 7, 3, 30000),
-(34, 32, 8, 1, 550000),
-(35, 33, 8, 5, 2750000),
-(36, 34, 9, 6, 15000),
-(37, 35, 8, 2, 1100000),
-(38, 35, 9, 4, 14000),
-(39, 36, 8, 3, 1740000),
-(40, 36, 9, 2, 6000),
-(41, 37, 8, 2, 1160000),
-(42, 37, 9, 2, 5000),
-(43, 38, 8, 2, 1100000),
-(44, 38, 9, 1, 3500),
-(45, 39, 8, 3, 1740000),
-(46, 40, 8, 1, 550000),
-(47, 41, 8, 1, 550000),
-(48, 42, 8, 1, 550000),
-(49, 43, 8, 1, 550000),
-(50, 45, 8, 1, 550000),
-(51, 46, 8, 1, 550000);
+(52, 47, 10, 5, 600000),
+(53, 48, 11, 2, 120000),
+(54, 49, 11, 10, 50000);
 
 -- --------------------------------------------------------
 
@@ -88,10 +70,8 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`id_item`, `kategori_id`, `nama_item`, `merk`, `jenis_satuan`, `jumlah_satuan`, `isi_satuan`, `harga_beli`, `harga_jual`, `harga_jual2`, `harga_jual3`, `total_dibeli`) VALUES
-(6, 6, 'bubur ayam', NULL, 'pack', 72, '50', 50000, 70000, 75000, 78000, 80),
-(7, 6, 'ciki', NULL, 'dus', 27, '50', 9000, 10000, 11000, 12000, 30),
-(8, 8, 'Teh Pucuk', NULL, 'Dus', 4, '24', 500000, 550000, 560000, 580000, 28),
-(9, 8, 'Teh Pucuk botol', NULL, 'botol', 5, '10', 2000, 2500, 3000, 3500, 20);
+(10, 9, 'Teh Pucuk', NULL, 'Dus', 95, 'Kosong', 100000, 120000, 10000, 0, 100),
+(11, 9, 'Kapal Api', NULL, 'Dus', 38, 'Kosong', 50000, 60000, 5000, 0, 50);
 
 -- --------------------------------------------------------
 
@@ -110,8 +90,7 @@ CREATE TABLE `kategori` (
 --
 
 INSERT INTO `kategori` (`id`, `kategori`, `tanggal`) VALUES
-(6, 'Makanan', '2024-03-13'),
-(8, 'Minuman', '2024-03-23');
+(9, 'Minuman', '2024-03-27');
 
 -- --------------------------------------------------------
 
@@ -132,8 +111,8 @@ CREATE TABLE `member` (
 --
 
 INSERT INTO `member` (`id`, `nama`, `diskon`, `alamat`, `nomor`) VALUES
-(6, 'azky', 15, 'jl sultan agung', '01111111'),
-(7, 'adi', 0, 'jl sultan agung', '087345353345');
+(10, 'adi', 0, 'Jl. Mawar', '085125456956'),
+(11, 'azky', 0, 'Jl. Anggrek', '081254565552');
 
 -- --------------------------------------------------------
 
@@ -155,8 +134,8 @@ CREATE TABLE `opname` (
 --
 
 INSERT INTO `opname` (`id_opname`, `id_item`, `stok_opname`, `balance`, `keterangan`, `tanggal`) VALUES
-(8, 1, 10, 'Deskripsi opname', 'Keterangan opname', '2024-03-13'),
-(24, 8, 12, 'Lebih 3', 'bonus', '2024-03-23');
+(25, 11, 100, 'Lebih 62', 'Bonus ', '2024-03-27'),
+(26, 10, 95, 'Benar', 'Pass', '2024-03-27');
 
 -- --------------------------------------------------------
 
@@ -176,8 +155,7 @@ CREATE TABLE `sales` (
 --
 
 INSERT INTO `sales` (`id`, `nama`, `nomor`, `alamat`) VALUES
-(3, 'Sales C', '087234723468', 'Jl Melatii'),
-(4, 'Sales A', '085675756555', 'Jl Mawar');
+(5, 'Sales A', '085455565854', 'Jl. Mawar');
 
 -- --------------------------------------------------------
 
@@ -204,22 +182,9 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id_transaksi`, `no_transaksi`, `tanggal`, `nama_pelanggan`, `total_harga`, `diskon`, `uang_terima`, `kembalian`, `kurangan`, `keterangan`, `tipe_pembayaran`) VALUES
-(30, 'TR23227232', '2024-02-08', 'adi', 90000, 10, 100000, 10000.00, 0, 'dfsfsdfsf', ''),
-(31, 'TR13622229', '2024-03-13', 'adi', 153000, 10, 160000, 7000.00, 0, 'dsdfsd', ''),
-(32, 'TR18736986', '2024-03-23', 'adi', 495000, 10, 550000, 55000.00, 0, 'Terima', ''),
-(33, 'TR14670101', '2024-01-02', 'budi', 2750000, 0, 5500000, 2750000.00, 0, 'dhfdfgrgdgfg', ''),
-(34, 'TR17381027', '2024-03-24', 'budi', 15000, 0, 550000, 535000.00, 0, 'ghgfhfh', ''),
-(35, 'TR73515861', '2024-03-24', 'budi', 1114000, 0, 2000000, 886000.00, 0, 'retdfgdfse', ''),
-(36, 'TR15513388', '2024-03-24', 'adi', 1746000, 0, 5500000, 3754000.00, 0, 'Toni', ''),
-(37, 'TR81978546', '2024-03-24', 'azky', 1165000, 0, 2000000, 835000.00, 0, 'Sales A', ''),
-(38, 'TR74084467', '2024-03-24', 'adi', 1103500, 0, 2000000, 896500.00, 0, 'Sales A', ''),
-(39, 'TR26881654', '2024-03-25', 'azky', 1740000, 0, 2000000, 260000.00, 0, 'Sales A', ''),
-(40, 'TR11834293', '2024-03-27', 'adi', 550000, 0, 500000, 0.00, 0, 'Sales A', ''),
-(41, 'TR28663223', '2024-03-27', 'adi', 550000, 0, 500000, 0.00, 0, 'Sales A', ''),
-(42, 'TR12700244', '2024-03-27', 'adi', 550000, 0, 500000, 0.00, 0, 'Sales C', ''),
-(43, 'TR11181342', '2024-03-27', 'adi', 550000, 0, 500000, 0.00, 0, 'Sales C', ''),
-(45, 'TR16887087', '2024-03-27', 'adi', 550000, 0, 500000, 0.00, 0, 'Sales C', ''),
-(46, 'TR95247567', '2024-03-27', 'adi', 550000, 0, 500000, 0.00, 0, 'Sales A', '');
+(47, 'TR12602447', '2024-03-27', 'adi', 600000, 0, 600000, 0.00, 0, 'Sales A', ''),
+(48, 'TR97081546', '2024-03-27', 'adi', 120000, 0, 150000, 30000.00, 0, 'Sales A', ''),
+(49, 'TR15810015', '2024-03-27', 'azky', 50000, 0, 50000, 0.00, 0, 'Sales A', '');
 
 -- --------------------------------------------------------
 
@@ -239,8 +204,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_users`, `username`, `role`, `password`) VALUES
-(1, 'admin', 'Admin', 'admin'),
-(2, 'kasir', 'Kasir', 'kasir');
+(1, 'admin', 'Admin', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -304,43 +268,43 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id_detail_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `member`
 --
 ALTER TABLE `member`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `opname`
 --
 ALTER TABLE `opname`
-  MODIFY `id_opname` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_opname` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -96,8 +96,22 @@ function unformatRupiah($str)
                                             </div>
                                             <div class="form-group">
                                                 <label for="jenis_satuan">Satuan Jenis</label>
-                                                <input type="text" class="form-control" id="jenis_satuan" name="jenis_satuan" required>
+                                                <select class="form-control" id="jenis_satuan" name="jenis_satuan" required>
+                                                    <option value="Pieces">Pieces</option>
+                                                    <option value="Dus">Dus</option>
+                                                    <option value="Saset">Saset</option>
+                                                    <option value="Kaleng">Kaleng</option>
+                                                    <option value="Pack">Pack</option>
+                                                    <option value="Bottle">Botol</option>
+                                                    <option value="Kilogram">Kilogram (Kg)</option>
+                                                    <option value="Gram">Gram (g)</option>
+                                                    <option value="Liter">Liter (L)</option>
+                                                    <option value="Meter">Meter (m)</option>
+                                                    <option value="Centimeter">Centimeter (cm)</option>
+                                                </select>
                                             </div>
+
+
                                             <div class="form-group">
                                                 <label for="jumlah_satuan">Jumlah</label>
                                                 <input type="text" class="form-control" id="jumlah_satuan" name="jumlah_satuan" required>
